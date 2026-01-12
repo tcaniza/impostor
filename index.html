@@ -18,7 +18,10 @@
           <h1>Impostor (AR)</h1>
         </div>
       </div>
-      <div class="pill" id="dbPill">Cartas: <strong id="dbCount">…</strong></div>
+      <div class="topbar-actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">Modo oscuro</button>
+        <div class="pill" id="dbPill">Cartas: <strong id="dbCount">…</strong></div>
+      </div>
     </div>
 
 
@@ -214,6 +217,7 @@
     const LS = {
       names: "impostor_ar_names_v1",
       impostors: "impostor_ar_impostors_v1",
+      theme: "impostor_ar_theme_v1",
     };
     function storageGet(key){
       try{ return localStorage.getItem(key); }catch(e){ return null; }
@@ -238,6 +242,7 @@
 
     // Elements
     const dbCount = $("#dbCount");
+    const themeToggle = $("#themeToggle");
 
     const segBtns = Array.from(document.querySelectorAll(".segBtn"));
     const namesInput = $("#namesInput");
@@ -270,6 +275,22 @@
     const sumImpostors = $("#sumImpostors");
     const sumCrew = $("#sumCrew");
     const btnBackSetup = $("#btnBackSetup");
+
+    function applyTheme(theme){
+      const root = document.documentElement;
+      const useDark = theme === "dark";
+      root.dataset.theme = useDark ? "dark" : "light";
+      if(themeToggle){
+        themeToggle.textContent = useDark ? "Modo claro" : "Modo oscuro";
+        themeToggle.setAttribute("aria-pressed", useDark ? "true" : "false");
+      }
+    }
+
+    function loadThemeFromStorage(){
+      const savedTheme = storageGet(LS.theme);
+      const theme = savedTheme === "dark" ? "dark" : "light";
+      applyTheme(theme);
+    }
 
     // Load JSON (siempre en mismo directorio)
     async function loadJSONOrDie(){
@@ -477,6 +498,15 @@
 
     namesInput.addEventListener("input", refreshChips);
 
+    if(themeToggle){
+      themeToggle.addEventListener("click", () => {
+        const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(nextTheme);
+        storageSet(LS.theme, nextTheme);
+        vibrate(12);
+      });
+    }
+
 
     if(btnClearNames) btnClearNames.addEventListener("click", () => {
       const hasSaved = !!(storageGet(LS.names) || "").trim();
@@ -545,6 +575,7 @@
         alert("No se pudo iniciar el mazo. Revisá que el archivo esté en la misma carpeta.");
       }
       loadSetupFromStorage();
+      loadThemeFromStorage();
       refreshChips();
     })();
   </script>
