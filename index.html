@@ -51,6 +51,13 @@
 
       <div class="chipset" id="namesChips" aria-label="Lista de jugadores"></div>
 
+      <label>Categorías de palabras</label>
+      <div class="metaRow">
+        <button class="btn secondary" id="btnCategories" type="button">Elegir categorías</button>
+        <div class="pill mini" id="categoryPill">Categorías: <strong id="categoryCount">—</strong></div>
+      </div>
+      <p class="tiny" id="categorySummary">Todas las categorías activas.</p>
+
       <div class="spacer"></div>
 
       <div class="metaRow" aria-label="Estado">
@@ -154,6 +161,24 @@
     </section>
   </div>
 
+  <dialog id="categoryDialog" class="categoryDialog" aria-labelledby="categoryTitle">
+    <form method="dialog" class="dialogCard">
+      <div class="dialogHeader">
+        <h3 id="categoryTitle">Seleccionar categorías</h3>
+        <button type="button" class="iconBtn" id="btnCloseCategories" aria-label="Cerrar">×</button>
+      </div>
+      <p class="desc">Elegí con qué categorías van a jugar esta ronda.</p>
+      <div class="dialogActions">
+        <button type="button" class="btn secondary small" id="btnCatAll">Todas</button>
+        <button type="button" class="btn secondary small" id="btnCatNone">Ninguna</button>
+      </div>
+      <div class="categoryList" id="categoryList"></div>
+      <div class="footerRow">
+        <button class="btn" id="btnSaveCategories" type="button">Guardar selección</button>
+      </div>
+    </form>
+  </dialog>
+
   <script>
     // Helpers
     const $ = (sel) => document.querySelector(sel);
@@ -218,6 +243,7 @@
       names: "impostor_ar_names_v1",
       impostors: "impostor_ar_impostors_v1",
       theme: "impostor_ar_theme_v1",
+      categories: "impostor_ar_categories_v1",
     };
     function storageGet(key){
       try{ return localStorage.getItem(key); }catch(e){ return null; }
@@ -228,17 +254,29 @@
     function storageRemove(key){
       try{ localStorage.removeItem(key); }catch(e){}
     }
+    function storageGetJSON(key, fallback = null){
+      const raw = storageGet(key);
+      if(!raw) return fallback;
+      try{ return JSON.parse(raw); }catch(e){ return fallback; }
+    }
+    function storageSetJSON(key, val){
+      storageSet(key, JSON.stringify(val));
+    }
 
 
     // State
     let wordsDB = [];
+    let fullWordsDB = [];
+    let categories = [];
+    let selectedCategories = new Set();
+    let draftCategories = new Set();
     let impostorsCount = 1;
 
     let players = [];
     let impostorIdx = [];
     let currentPlayer = 0;
 
-    let round = { palabra: "", pista: "" };
+    let round = { palabra: "", pista: "", categoria: "" };
 
     // Elements
     const dbCount = $("#dbCount");
@@ -252,6 +290,16 @@
     const minPlayersEl = $("#minPlayers");
     const savedStateEl = $("#savedState");
     const savedPill = $("#savedPill");
+    const btnCategories = $("#btnCategories");
+    const categoryCount = $("#categoryCount");
+    const categoryPill = $("#categoryPill");
+    const categorySummary = $("#categorySummary");
+    const categoryDialog = $("#categoryDialog");
+    const categoryList = $("#categoryList");
+    const btnSaveCategories = $("#btnSaveCategories");
+    const btnCatAll = $("#btnCatAll");
+    const btnCatNone = $("#btnCatNone");
+    const btnCloseCategories = $("#btnCloseCategories");
 
     const passIdx = $("#passIdx");
     const passTotal = $("#passTotal");
@@ -306,21 +354,22 @@
       if(data.length < 50) throw new Error("Mazo inválido.");
       const x = data[0];
       if(!x || typeof x !== "object") throw new Error("Mazo inválido.");
-      if(!("palabra" in x) || !("pista" in x)) throw new Error("Mazo inválido.");
+      if(!("palabra" in x) || !("pista" in x) || !("categoria" in x)) throw new Error("Mazo inválido.");
     }
 
     function setDB(data){
-      wordsDB = data
-        .filter(x => x && typeof x.palabra === "string" && typeof x.pista === "string")
+      fullWordsDB = data
+        .filter(x => x && typeof x.palabra === "string" && typeof x.pista === "string" && typeof x.categoria === "string")
         .map(x => ({
           palabra: x.palabra.trim(),
           pista: x.pista.trim(),
+          categoria: x.categoria.trim(),
         }))
-        .filter(x => x.palabra.length && x.pista.length);
+        .filter(x => x.palabra.length && x.pista.length && x.categoria.length);
 
-      dbCount.textContent = wordsDB.length.toString();
-      $("#dbPill").style.borderColor = "rgba(27,122,100,.30)";
-      $("#dbPill").style.background = "rgba(27,122,100,.10)";
+      categories = Array.from(new Set(fullWordsDB.map(x => x.categoria))).sort((a, b) => a.localeCompare(b));
+      loadCategoriesFromStorage();
+      applyCategoryFilter();
     }
 
     // Players
@@ -376,6 +425,92 @@
       updateSavedUI();
     }
 
+    function loadCategoriesFromStorage(){
+      const saved = storageGetJSON(LS.categories, []);
+      if(Array.isArray(saved)){
+        selectedCategories = new Set(saved.filter((cat) => categories.includes(cat)));
+      }
+      if(selectedCategories.size === 0){
+        selectedCategories = new Set(categories);
+      }
+    }
+
+    function saveCategoriesToStorage(){
+      storageSetJSON(LS.categories, Array.from(selectedCategories));
+    }
+
+    function updateCategorySummary(){
+      const total = categories.length;
+      const selected = selectedCategories.size;
+      if(categoryCount) categoryCount.textContent = `${selected}/${total}`;
+      if(categoryPill) categoryPill.classList.toggle("dirty", selected === 0);
+      if(!categorySummary) return;
+      if(selected === 0){
+        categorySummary.textContent = "Seleccioná al menos una categoría.";
+        return;
+      }
+      if(selected === total){
+        categorySummary.textContent = "Todas las categorías activas.";
+        return;
+      }
+      const list = Array.from(selectedCategories).slice(0, 3);
+      const extra = selected - list.length;
+      const suffix = extra > 0 ? ` y ${extra} más` : "";
+      categorySummary.textContent = `Activas: ${list.join(", ")}${suffix}.`;
+    }
+
+    function applyCategoryFilter(){
+      wordsDB = fullWordsDB.filter((w) => selectedCategories.has(w.categoria));
+      dbCount.textContent = wordsDB.length.toString();
+      $("#dbPill").style.borderColor = "rgba(27,122,100,.30)";
+      $("#dbPill").style.background = "rgba(27,122,100,.10)";
+      updateCategorySummary();
+    }
+
+    function renderCategoryDialog(){
+      if(!categoryList) return;
+      categoryList.innerHTML = "";
+      categories.forEach((cat) => {
+        const row = document.createElement("label");
+        row.className = "categoryItem";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = cat;
+        checkbox.checked = draftCategories.has(cat);
+        checkbox.addEventListener("change", () => {
+          if(checkbox.checked) draftCategories.add(cat);
+          else draftCategories.delete(cat);
+        });
+        const span = document.createElement("span");
+        span.textContent = cat;
+        row.appendChild(checkbox);
+        row.appendChild(span);
+        categoryList.appendChild(row);
+      });
+    }
+
+    function openCategoryDialog(){
+      draftCategories = new Set(selectedCategories);
+      renderCategoryDialog();
+      if(categoryDialog?.showModal){
+        categoryDialog.showModal();
+      }else if(categoryDialog){
+        categoryDialog.setAttribute("open", "true");
+      }
+    }
+
+    function closeCategoryDialog(){
+      if(categoryDialog?.close){
+        categoryDialog.close();
+      }else if(categoryDialog){
+        categoryDialog.removeAttribute("open");
+      }
+    }
+
+    function toggleAllCategories(checked){
+      draftCategories = checked ? new Set(categories) : new Set();
+      renderCategoryDialog();
+    }
 
     function refreshChips(){
       players = parseNames(namesInput.value);
@@ -401,7 +536,7 @@
       });
 
       const minPlayers = Math.max(3, impostorsCount + 2);
-      btnStart.disabled = !(wordsDB.length > 0 && players.length >= minPlayers);
+      btnStart.disabled = !(wordsDB.length > 0 && selectedCategories.size > 0 && players.length >= minPlayers);
       if(minPlayersEl) minPlayersEl.textContent = String(minPlayers);
       updateSavedUI();
     }
@@ -413,6 +548,7 @@
       const pick = sampleOne(wordsDB);
       round.palabra = pick.palabra;
       round.pista = pick.pista;
+      round.categoria = pick.categoria;
 
       const idx = shuffle([...players.keys()]);
       impostorIdx = idx.slice(0, impostorsCount).sort((a,b)=>a-b);
@@ -441,7 +577,7 @@
         roleBadge.className = "badge bad";
         roleBadge.textContent = "SOS IMPOSTOR 😈";
         secretMain.textContent = round.pista;
-        secretSub.textContent = "Disimulá y tratá de adivinar la palabra.";
+        secretSub.textContent = `Categoría: ${round.categoria} · ${round.palabra.length} letras. Disimulá y tratá de adivinar la palabra.`;
       }else{
         roleBadge.className = "badge good";
         roleBadge.textContent = "NO SOS IMPOSTOR ✅";
@@ -469,7 +605,7 @@
     // Summary
     function renderSummary(){
       sumWord.textContent = round.palabra;
-      sumClue.textContent = "Pista: " + round.pista;
+      sumClue.textContent = `Pista: ${round.pista} · Categoría: ${round.categoria}`;
 
       sumImpostors.innerHTML = "";
       sumCrew.innerHTML = "";
@@ -497,6 +633,37 @@
     });
 
     namesInput.addEventListener("input", refreshChips);
+    if(btnCategories){
+      btnCategories.addEventListener("click", openCategoryDialog);
+    }
+    if(btnCloseCategories){
+      btnCloseCategories.addEventListener("click", () => {
+        closeCategoryDialog();
+        vibrate(10);
+      });
+    }
+    if(btnCatAll){
+      btnCatAll.addEventListener("click", () => {
+        toggleAllCategories(true);
+        vibrate(10);
+      });
+    }
+    if(btnCatNone){
+      btnCatNone.addEventListener("click", () => {
+        toggleAllCategories(false);
+        vibrate(10);
+      });
+    }
+    if(btnSaveCategories){
+      btnSaveCategories.addEventListener("click", () => {
+        selectedCategories = new Set(draftCategories);
+        saveCategoriesToStorage();
+        applyCategoryFilter();
+        refreshChips();
+        closeCategoryDialog();
+        vibrate(12);
+      });
+    }
 
     if(themeToggle){
       themeToggle.addEventListener("click", () => {
@@ -576,6 +743,7 @@
       }
       loadSetupFromStorage();
       loadThemeFromStorage();
+      updateCategorySummary();
       refreshChips();
     })();
   </script>
