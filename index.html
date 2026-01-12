@@ -4,18 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#590404" />
-  <title>Impostor fc mari</title>
+  <title>El impostor</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="mascota.jpg" />
+  <link rel="icon" href="logo_blanco.svg" id="favicon" />
 </head>
 
 <body>
   <div class="app">
     <div class="topbar">
       <div class="brand">
-        <img class="mascot" src="mascota.jpg" alt="Mascota" />
+        <img class="mascot" src="logo_blanco.svg" alt="Logo de El impostor" id="brandLogo" />
         <div>
-          <h1>Impostor (AR)</h1>
+          <h1>El impostor</h1>
         </div>
       </div>
       <div class="topbar-actions">
@@ -83,7 +83,7 @@
       </div>
 
       <div class="center" style="position:relative; z-index:1;">
-        <img class="passMascot" src="mascota.jpg" alt="Mascota" />
+        <img class="passMascot" src="logo_blanco.svg" alt="Logo de El impostor" id="passLogo" />
         <div class="big">Pasá el celu a</div>
         <div class="secret" id="passName">—</div>
         <p class="desc">Cuando lo tengas, tocá el botón para ver tu rol.</p>
@@ -281,6 +281,9 @@
     // Elements
     const dbCount = $("#dbCount");
     const themeToggle = $("#themeToggle");
+    const brandLogo = $("#brandLogo");
+    const passLogo = $("#passLogo");
+    const favicon = $("#favicon");
 
     const segBtns = Array.from(document.querySelectorAll(".segBtn"));
     const namesInput = $("#namesInput");
@@ -328,6 +331,10 @@
       const root = document.documentElement;
       const useDark = theme === "dark";
       root.dataset.theme = useDark ? "dark" : "light";
+      const logoSrc = useDark ? "logo_negro.svg" : "logo_blanco.svg";
+      if(brandLogo) brandLogo.src = logoSrc;
+      if(passLogo) passLogo.src = logoSrc;
+      if(favicon) favicon.href = logoSrc;
       if(themeToggle){
         themeToggle.textContent = useDark ? "Modo claro" : "Modo oscuro";
         themeToggle.setAttribute("aria-pressed", useDark ? "true" : "false");
