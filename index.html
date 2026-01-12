@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#590404" />
+  <title>Impostor fc mari</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="mascota.jpg" />
+</head>
+
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <img class="mascot" src="mascota.jpg" alt="Mascota" />
+        <div>
+          <h1>Impostor (AR)</h1>
+        </div>
+      </div>
+      <div class="pill" id="dbPill">Cartas: <strong id="dbCount">…</strong></div>
+    </div>
+
+
+    <div class="steps" id="steps" aria-label="Progreso de la partida">
+      <div class="step active" data-step="setup"><span class="dot"></span><span class="txt">Config</span></div>
+      <div class="step" data-step="pass"><span class="dot"></span><span class="txt">Pasar</span></div>
+      <div class="step" data-step="reveal"><span class="dot"></span><span class="txt">Ver</span></div>
+      <div class="step" data-step="play"><span class="dot"></span><span class="txt">Jugar</span></div>
+      <div class="step" data-step="summary"><span class="dot"></span><span class="txt">Resumen</span></div>
+    </div>
+
+    <!-- SETUP -->
+    <section class="card screen active" id="screenSetup">
+      <h2 class="title">Configurar partida</h2>
+      <p class="desc">
+        Elegí impostores, cargá nombres y empezá. El impostor ve una pista, los demás ven la palabra.
+      </p>
+
+      <label>¿Cuántos impostores?</label>
+      <div class="seg" role="group" aria-label="Cantidad de impostores">
+        <button type="button" class="segBtn" data-impostors="1" aria-pressed="true">1 impostor</button>
+        <button type="button" class="segBtn" data-impostors="2" aria-pressed="false">2 impostores</button>
+      </div>
+
+      <label>Nombres (uno por línea)</label>
+      <textarea id="namesInput" placeholder="Nombre 1&#10;Nombre 2&#10;Nombre 3&#10;..."></textarea>
+
+      <div class="chipset" id="namesChips" aria-label="Lista de jugadores"></div>
+
+      <div class="spacer"></div>
+
+      <div class="metaRow" aria-label="Estado">
+        <div class="pill mini" id="savedPill">Nombres: <strong id="savedState">—</strong></div>
+        <div class="pill mini">Mínimo: <strong id="minPlayers">—</strong></div>
+      </div>
+
+      <div class="footerRow">
+        <button class="btn" id="btnStart" type="button" disabled>Iniciar juego</button>
+        <button class="btn secondary" id="btnClearNames" type="button">Borrar nombres</button>
+      </div>
+
+      <p class="tiny">
+        Tip: cuando tocás <b>Estoy listo</b>, aparece tu palabra o tu pista. Mirá rápido y pasá.
+      </p>
+    </section>
+
+    <!-- PASS -->
+    <section class="card screen" id="screenPass">
+      <div style="display:flex; justify-content:space-between; gap:10px; align-items:center; position:relative; z-index:1;">
+        <div class="pill">Jugador <strong id="passIdx">1</strong>/<strong id="passTotal">1</strong></div>
+        <button class="btn secondary" id="btnAbort" type="button" style="width:auto; padding:10px 12px;">Volver</button>
+      </div>
+
+      <div class="center" style="position:relative; z-index:1;">
+        <img class="passMascot" src="mascota.jpg" alt="Mascota" />
+        <div class="big">Pasá el celu a</div>
+        <div class="secret" id="passName">—</div>
+        <p class="desc">Cuando lo tengas, tocá el botón para ver tu rol.</p>
+        <div class="spacer"></div>
+        <button class="btn" id="btnImReady" type="button">Estoy listo</button>
+        <p class="tiny">Que nadie mire 😄</p>
+      </div>
+    </section>
+
+    <!-- REVEAL -->
+    <section class="card screen" id="screenReveal">
+      <div style="display:flex; justify-content:space-between; gap:10px; align-items:center; position:relative; z-index:1;">
+        <div class="pill">Turno de <strong id="revealName">—</strong></div>
+      </div>
+
+      <div class="revealBox">
+        <div class="badge warn" id="roleBadge">Rol</div>
+
+        <div id="secretWrap" aria-live="polite">
+          <div class="secret" id="secretMain">—</div>
+          <p class="secretSub" id="secretSub">—</p>
+        </div>
+
+        <p class="tiny" style="margin-top:10px;">
+          Cuando termines, tocá <b>Ocultar y pasar</b>.
+        </p>
+
+        <div class="footerRow">
+          <button class="btn secondary" id="btnHideNext" type="button">Ocultar y pasar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLAY -->
+    <section class="card screen" id="screenPlay">
+      <h2 class="title">¡A jugar!</h2>
+      <p class="desc">
+        Ya todos vieron su rol. Ahora juegan y cuando quieran, finalizan la partida.
+      </p>
+
+      <div class="revealBox">
+        <div class="badge good">Partida en curso</div>
+        <p class="desc" style="margin-top:4px;">
+          Impostores: <b id="playImpostors">1</b> · Jugadores: <b id="playPlayers">—</b>
+        </p>
+
+        <div class="footerRow">
+          <button class="btn danger" id="btnFinish" type="button">Finalizar partida</button>
+          <button class="btn secondary" id="btnNew" type="button">Repartir de nuevo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="card screen" id="screenSummary">
+      <h2 class="title">Resumen</h2>
+      <p class="desc">Palabra real y quién(es) fueron impostor(es).</p>
+
+      <div class="revealBox">
+        <div class="secret" id="sumWord">—</div>
+        <p class="secretSub" id="sumClue">—</p>
+
+        <div class="spacer"></div>
+        <div class="badge bad">Impostor(es)</div>
+        <div id="sumImpostors" class="chipset"></div>
+
+        <div class="spacer"></div>
+        <div class="badge good">No impostores</div>
+        <div id="sumCrew" class="chipset"></div>
+
+        <div class="footerRow">
+          <button class="btn" id="btnBackSetup" type="button">Volver al inicio</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Helpers
+    const $ = (sel) => document.querySelector(sel);
+
+    const screens = {
+      setup: $("#screenSetup"),
+      pass: $("#screenPass"),
+      reveal: $("#screenReveal"),
+      play: $("#screenPlay"),
+      summary: $("#screenSummary"),
+    };
+    function updateSteps(activeKey){
+      const stepsEl = $("#steps");
+      if(!stepsEl) return;
+      const order = ["setup","pass","reveal","play","summary"];
+      const activeIdx = order.indexOf(activeKey);
+
+      stepsEl.querySelectorAll(".step").forEach((el) => {
+        const k = el.dataset.step;
+        const idx = order.indexOf(k);
+        el.classList.toggle("active", k === activeKey);
+        el.classList.toggle("done", idx > -1 && activeIdx > -1 && idx < activeIdx);
+      });
+    }
+
+    function focusForScreen(key){
+      const map = {
+        setup: () => $("#namesInput"),
+        pass: () => $("#btnImReady"),
+        reveal: () => $("#btnHideNext"),
+        play: () => $("#btnFinish"),
+        summary: () => $("#btnBackSetup"),
+      };
+      try{
+        const el = map[key]?.();
+        if(el) requestAnimationFrame(() => el.focus({ preventScroll: true }));
+      }catch(e){}
+    }
+
+    function showScreen(key){
+      for (const k of Object.keys(screens)) screens[k].classList.remove("active");
+      screens[key].classList.add("active");
+      updateSteps(key);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      focusForScreen(key);
+    }
+    function vibrate(ms=18){
+      try{ if (navigator.vibrate) navigator.vibrate(ms); }catch(e){}
+    }
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    function sampleOne(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+    // LocalStorage (nombres y configuración)
+    const LS = {
+      names: "impostor_ar_names_v1",
+      impostors: "impostor_ar_impostors_v1",
+    };
+    function storageGet(key){
+      try{ return localStorage.getItem(key); }catch(e){ return null; }
+    }
+    function storageSet(key, val){
+      try{ localStorage.setItem(key, String(val)); }catch(e){}
+    }
+    function storageRemove(key){
+      try{ localStorage.removeItem(key); }catch(e){}
+    }
+
+
+    // State
+    let wordsDB = [];
+    let impostorsCount = 1;
+
+    let players = [];
+    let impostorIdx = [];
+    let currentPlayer = 0;
+
+    let round = { palabra: "", pista: "" };
+
+    // Elements
+    const dbCount = $("#dbCount");
+
+    const segBtns = Array.from(document.querySelectorAll(".segBtn"));
+    const namesInput = $("#namesInput");
+    const namesChips = $("#namesChips");
+    const btnStart = $("#btnStart");
+    const btnClearNames = $("#btnClearNames");
+    const minPlayersEl = $("#minPlayers");
+    const savedStateEl = $("#savedState");
+    const savedPill = $("#savedPill");
+
+    const passIdx = $("#passIdx");
+    const passTotal = $("#passTotal");
+    const passName = $("#passName");
+    const btnImReady = $("#btnImReady");
+    const btnAbort = $("#btnAbort");
+
+    const revealName = $("#revealName");
+    const roleBadge = $("#roleBadge");
+    const secretMain = $("#secretMain");
+    const secretSub = $("#secretSub");
+    const btnHideNext = $("#btnHideNext");
+
+    const playImpostors = $("#playImpostors");
+    const playPlayers = $("#playPlayers");
+    const btnFinish = $("#btnFinish");
+    const btnNew = $("#btnNew");
+
+    const sumWord = $("#sumWord");
+    const sumClue = $("#sumClue");
+    const sumImpostors = $("#sumImpostors");
+    const sumCrew = $("#sumCrew");
+    const btnBackSetup = $("#btnBackSetup");
+
+    // Load JSON (siempre en mismo directorio)
+    async function loadJSONOrDie(){
+      const res = await fetch("./impostor_argentina_500.json", { cache: "no-store" });
+      if(!res.ok) throw new Error("No se pudo cargar el mazo.");
+      const data = await res.json();
+      validateDB(data);
+      setDB(data);
+    }
+
+    function validateDB(data){
+      if(!Array.isArray(data)) throw new Error("Mazo inválido.");
+      if(data.length < 50) throw new Error("Mazo inválido.");
+      const x = data[0];
+      if(!x || typeof x !== "object") throw new Error("Mazo inválido.");
+      if(!("palabra" in x) || !("pista" in x)) throw new Error("Mazo inválido.");
+    }
+
+    function setDB(data){
+      wordsDB = data
+        .filter(x => x && typeof x.palabra === "string" && typeof x.pista === "string")
+        .map(x => ({
+          palabra: x.palabra.trim(),
+          pista: x.pista.trim(),
+        }))
+        .filter(x => x.palabra.length && x.pista.length);
+
+      dbCount.textContent = wordsDB.length.toString();
+      $("#dbPill").style.borderColor = "rgba(27,122,100,.30)";
+      $("#dbPill").style.background = "rgba(27,122,100,.10)";
+    }
+
+    // Players
+    function parseNames(text){
+      const raw = text.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+      const seen = new Set();
+      const unique = [];
+      for(const n of raw){
+        const key = n.toLowerCase();
+        if(!seen.has(key)){
+          seen.add(key);
+          unique.push(n);
+        }
+      }
+      return unique;
+    }
+
+
+    function normalizedNames(){
+      return parseNames(namesInput.value).join("");
+    }
+
+    function updateSavedUI(){
+      const saved = storageGet(LS.names) || "";
+      const current = normalizedNames();
+      let label = "No guardados";
+      if(saved){
+        label = (saved === current) ? "Guardados" : "Editados";
+      }
+      if(savedStateEl) savedStateEl.textContent = label;
+      if(savedPill) savedPill.classList.toggle("dirty", saved && saved !== current);
+    }
+
+    function saveSetupToStorage(){
+      storageSet(LS.impostors, impostorsCount);
+      storageSet(LS.names, normalizedNames());
+      updateSavedUI();
+    }
+
+    function loadSetupFromStorage(){
+      const savedNames = storageGet(LS.names);
+      if(savedNames && typeof savedNames === "string"){
+        namesInput.value = savedNames;
+      }
+      const savedImp = Number(storageGet(LS.impostors));
+      if(savedImp === 1 || savedImp === 2){
+        impostorsCount = savedImp;
+      }
+      segBtns.forEach(b => {
+        const n = Number(b.dataset.impostors);
+        b.setAttribute("aria-pressed", n === impostorsCount ? "true" : "false");
+      });
+      updateSavedUI();
+    }
+
+
+    function refreshChips(){
+      players = parseNames(namesInput.value);
+      namesChips.innerHTML = "";
+
+      players.forEach((name, idx) => {
+        const chip = document.createElement("div");
+        chip.className = "chip";
+        chip.innerHTML = `<span>${name}</span>`;
+        const x = document.createElement("button");
+        x.type = "button";
+        x.textContent = "×";
+        x.title = "Quitar";
+        x.addEventListener("click", () => {
+          const arr = parseNames(namesInput.value);
+          arr.splice(idx, 1);
+          namesInput.value = arr.join("\n");
+          refreshChips();
+          vibrate(12);
+        });
+        chip.appendChild(x);
+        namesChips.appendChild(chip);
+      });
+
+      const minPlayers = Math.max(3, impostorsCount + 2);
+      btnStart.disabled = !(wordsDB.length > 0 && players.length >= minPlayers);
+      if(minPlayersEl) minPlayersEl.textContent = String(minPlayers);
+      updateSavedUI();
+    }
+
+    // Round setup
+    function setupNewRound(){
+      if(!wordsDB.length) return;
+
+      const pick = sampleOne(wordsDB);
+      round.palabra = pick.palabra;
+      round.pista = pick.pista;
+
+      const idx = shuffle([...players.keys()]);
+      impostorIdx = idx.slice(0, impostorsCount).sort((a,b)=>a-b);
+
+      currentPlayer = 0;
+
+      passTotal.textContent = players.length;
+      updatePass();
+    }
+
+    function updatePass(){
+      passIdx.textContent = (currentPlayer + 1);
+      passName.textContent = players[currentPlayer] ?? "—";
+    }
+
+    function isImpostor(i){ return impostorIdx.includes(i); }
+
+    // Reveal (directo: palabra o pista)
+    function openReveal(){
+      const name = players[currentPlayer];
+      revealName.textContent = name;
+
+      const imp = isImpostor(currentPlayer);
+
+      if(imp){
+        roleBadge.className = "badge bad";
+        roleBadge.textContent = "SOS IMPOSTOR 😈";
+        secretMain.textContent = round.pista;
+        secretSub.textContent = "Disimulá y tratá de adivinar la palabra.";
+      }else{
+        roleBadge.className = "badge good";
+        roleBadge.textContent = "NO SOS IMPOSTOR ✅";
+        secretMain.textContent = round.palabra;
+        secretSub.textContent = "Guardate la palabra y disimulá.";
+      }
+
+      vibrate(14);
+      showScreen("reveal");
+    }
+
+    function nextPlayerOrPlay(){
+      currentPlayer++;
+      if(currentPlayer >= players.length){
+        playImpostors.textContent = String(impostorsCount);
+        playPlayers.textContent = String(players.length);
+        vibrate(20);
+        showScreen("play");
+      }else{
+        updatePass();
+        showScreen("pass");
+      }
+    }
+
+    // Summary
+    function renderSummary(){
+      sumWord.textContent = round.palabra;
+      sumClue.textContent = "Pista: " + round.pista;
+
+      sumImpostors.innerHTML = "";
+      sumCrew.innerHTML = "";
+
+      const impSet = new Set(impostorIdx);
+      players.forEach((p, i) => {
+        const chip = document.createElement("div");
+        chip.className = "chip";
+        chip.innerHTML = `<span>${p}</span>`;
+        if(impSet.has(i)) sumImpostors.appendChild(chip);
+        else sumCrew.appendChild(chip);
+      });
+    }
+
+    // Events
+    segBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        impostorsCount = Number(btn.dataset.impostors);
+        segBtns.forEach(b => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+        refreshChips();
+        storageSet(LS.impostors, impostorsCount);
+        updateSavedUI();
+        vibrate(12);
+      });
+    });
+
+    namesInput.addEventListener("input", refreshChips);
+
+
+    if(btnClearNames) btnClearNames.addEventListener("click", () => {
+      const hasSaved = !!(storageGet(LS.names) || "").trim();
+      if(!hasSaved && !namesInput.value.trim()){
+        vibrate(10);
+        return;
+      }
+      const ok = confirm("¿Borrar los nombres guardados y limpiar la lista?");
+      if(!ok) return;
+
+      storageRemove(LS.names);
+      namesInput.value = "";
+      refreshChips();
+      vibrate(18);
+    });
+
+
+    btnStart.addEventListener("click", () => {
+      refreshChips();
+      saveSetupToStorage();
+      setupNewRound();
+      showScreen("pass");
+    });
+
+    btnAbort.addEventListener("click", () => {
+      showScreen("setup");
+      vibrate(16);
+    });
+
+    btnImReady.addEventListener("click", openReveal);
+    btnHideNext.addEventListener("click", nextPlayerOrPlay);
+
+    // Finalizar partida sin confirmación
+    btnFinish.addEventListener("click", () => {
+      renderSummary();
+      showScreen("summary");
+      vibrate(24);
+    });
+
+    btnNew.addEventListener("click", () => {
+      refreshChips();
+      if(btnStart.disabled){
+        showScreen("setup");
+        vibrate(12);
+        return;
+      }
+      setupNewRound();
+      showScreen("pass");
+      vibrate(16);
+    });
+
+    btnBackSetup.addEventListener("click", () => {
+      refreshChips();
+      showScreen("setup");
+      vibrate(14);
+    });
+
+    // Init
+    (async function init(){
+      try{
+        await loadJSONOrDie();
+      }catch(e){
+        $("#dbPill").style.borderColor = "rgba(138,12,29,.30)";
+        $("#dbPill").style.background = "rgba(138,12,29,.10)";
+        dbCount.textContent = "0";
+        alert("No se pudo iniciar el mazo. Revisá que el archivo esté en la misma carpeta.");
+      }
+      loadSetupFromStorage();
+      refreshChips();
+    })();
+  </script>
+</body>
+</html>
