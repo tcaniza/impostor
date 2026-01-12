@@ -53,7 +53,7 @@
 
       <label>Categorías de palabras</label>
       <div class="metaRow">
-        <button class="btn secondary" id="btnCategories" type="button">Elegir categorías</button>
+        <button class="btn secondary" id="btnCategories" type="button">Seleccionar categorías</button>
         <div class="pill mini" id="categoryPill">Categorías: <strong id="categoryCount">—</strong></div>
       </div>
       <p class="tiny" id="categorySummary">Todas las categorías activas.</p>
@@ -164,17 +164,17 @@
   <dialog id="categoryDialog" class="categoryDialog" aria-labelledby="categoryTitle">
     <form method="dialog" class="dialogCard">
       <div class="dialogHeader">
-        <h3 id="categoryTitle">Seleccionar categorías</h3>
+        <h3 id="categoryTitle">Categorías de la ronda</h3>
         <button type="button" class="iconBtn" id="btnCloseCategories" aria-label="Cerrar">×</button>
       </div>
-      <p class="desc">Elegí con qué categorías van a jugar esta ronda.</p>
+      <p class="desc">Elegí las categorías con las que van a jugar para que todos entiendan la temática.</p>
       <div class="dialogActions">
-        <button type="button" class="btn secondary small" id="btnCatAll">Todas</button>
-        <button type="button" class="btn secondary small" id="btnCatNone">Ninguna</button>
+        <button type="button" class="btn secondary small" id="btnCatAll">Seleccionar todas</button>
+        <button type="button" class="btn secondary small" id="btnCatNone">Deseleccionar todas</button>
       </div>
       <div class="categoryList" id="categoryList"></div>
       <div class="footerRow">
-        <button class="btn" id="btnSaveCategories" type="button">Guardar selección</button>
+        <button class="btn" id="btnSaveCategories" type="button">Guardar categorías</button>
       </div>
     </form>
   </dialog>
@@ -278,6 +278,28 @@
 
     let round = { palabra: "", pista: "", categoria: "" };
 
+    const categoryLabels = {
+      bebida: "Bebidas",
+      calle_y_comercio: "Calle y comercio",
+      clima_ropa: "Clima y ropa",
+      comida: "Comida",
+      escuela: "Escuela",
+      futbol: "Fútbol",
+      hogar: "Hogar",
+      ocio_y_cultura: "Ocio y cultura",
+      salud_y_cuerpo: "Salud y cuerpo",
+      slang_argento: "Expresiones argentinas",
+      trabajo_y_tramites: "Trabajo y trámites",
+      transporte: "Transporte",
+    };
+
+    function getCategoryLabel(category){
+      if(categoryLabels[category]) return categoryLabels[category];
+      return category
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+    }
+
     // Elements
     const dbCount = $("#dbCount");
     const themeToggle = $("#themeToggle");
@@ -374,7 +396,8 @@
         }))
         .filter(x => x.palabra.length && x.pista.length && x.categoria.length);
 
-      categories = Array.from(new Set(fullWordsDB.map(x => x.categoria))).sort((a, b) => a.localeCompare(b));
+      categories = Array.from(new Set(fullWordsDB.map(x => x.categoria)))
+        .sort((a, b) => getCategoryLabel(a).localeCompare(getCategoryLabel(b), "es"));
       loadCategoriesFromStorage();
       applyCategoryFilter();
     }
@@ -460,7 +483,10 @@
         categorySummary.textContent = "Todas las categorías activas.";
         return;
       }
-      const list = Array.from(selectedCategories).slice(0, 3);
+      const list = categories
+        .filter((category) => selectedCategories.has(category))
+        .map(getCategoryLabel)
+        .slice(0, 3);
       const extra = selected - list.length;
       const suffix = extra > 0 ? ` y ${extra} más` : "";
       categorySummary.textContent = `Activas: ${list.join(", ")}${suffix}.`;
@@ -489,7 +515,7 @@
           else draftCategories.delete(cat);
         });
         const span = document.createElement("span");
-        span.textContent = cat;
+        span.textContent = getCategoryLabel(cat);
         row.appendChild(checkbox);
         row.appendChild(span);
         categoryList.appendChild(row);
@@ -584,7 +610,7 @@
         roleBadge.className = "badge bad";
         roleBadge.textContent = "SOS IMPOSTOR 😈";
         secretMain.textContent = round.pista;
-        secretSub.textContent = `Categoría: ${round.categoria} · ${round.palabra.length} letras. Disimulá y tratá de adivinar la palabra.`;
+        secretSub.textContent = `Categoría: ${getCategoryLabel(round.categoria)} · ${round.palabra.length} letras. Disimulá y tratá de adivinar la palabra.`;
       }else{
         roleBadge.className = "badge good";
         roleBadge.textContent = "NO SOS IMPOSTOR ✅";
@@ -612,7 +638,7 @@
     // Summary
     function renderSummary(){
       sumWord.textContent = round.palabra;
-      sumClue.textContent = `Pista: ${round.pista} · Categoría: ${round.categoria}`;
+      sumClue.textContent = `Pista: ${round.pista} · Categoría: ${getCategoryLabel(round.categoria)}`;
 
       sumImpostors.innerHTML = "";
       sumCrew.innerHTML = "";
