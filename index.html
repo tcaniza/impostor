@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#590404" />
   <title>El impostor</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" integrity="sha512-b7G6y70Y6tGQHCoq+6QttIq8D89xDSHLVbkP4Jr2dI+tvwlHGawEq+y3OCAXoTr4Wr9L5xRngk6VwBEmc6kTmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="styles.css" />
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  /><link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="logo_blanco.svg" id="favicon" />
 </head>
 
@@ -185,330 +187,405 @@
     </form>
   </dialog>
 
-  <script>
-    // Helpers
-    const $ = (sel) => document.querySelector(sel);
+<script>
+  // Helpers
+  const $ = (sel) => document.querySelector(sel);
 
-    const screens = {
-      setup: $("#screenSetup"),
-      pass: $("#screenPass"),
-      reveal: $("#screenReveal"),
-      play: $("#screenPlay"),
-      summary: $("#screenSummary"),
-    };
-    function updateSteps(activeKey){
-      const stepsEl = $("#steps");
-      if(!stepsEl) return;
-      const order = ["setup","pass","reveal","play","summary"];
-      const activeIdx = order.indexOf(activeKey);
+  const screens = {
+    setup: $("#screenSetup"),
+    pass: $("#screenPass"),
+    reveal: $("#screenReveal"),
+    play: $("#screenPlay"),
+    summary: $("#screenSummary"),
+  };
 
-      stepsEl.querySelectorAll(".step").forEach((el) => {
-        const k = el.dataset.step;
-        const idx = order.indexOf(k);
-        el.classList.toggle("active", k === activeKey);
-        el.classList.toggle("done", idx > -1 && activeIdx > -1 && idx < activeIdx);
-      });
-    }
+  function updateSteps(activeKey){
+    const stepsEl = $("#steps");
+    if(!stepsEl) return;
+    const order = ["setup","pass","reveal","play","summary"];
+    const activeIdx = order.indexOf(activeKey);
 
-    function animateElement(el, animation, delay = null){
-      if(!el || !animation) return;
-      el.classList.remove("animate__animated", animation);
-      void el.offsetWidth;
-      if(delay){
-        el.style.animationDelay = delay;
-      }else{
-        el.style.removeProperty("animation-delay");
+    stepsEl.querySelectorAll(".step").forEach((el) => {
+      const k = el.dataset.step;
+      const idx = order.indexOf(k);
+      el.classList.toggle("active", k === activeKey);
+      el.classList.toggle("done", idx > -1 && activeIdx > -1 && idx < activeIdx);
+    });
+  }
+
+  // ===== Animación robusta con animate.css =====
+  function stripAnimateClasses(el){
+    if(!el) return;
+    for(const c of Array.from(el.classList)){
+      if(c.startsWith("animate__") && c !== "animate__animated"){
+        el.classList.remove(c);
       }
-      el.classList.add("animate__animated", animation);
-      el.addEventListener("animationend", () => {
-        el.classList.remove(animation);
-        el.classList.remove("animate__animated");
-        el.style.removeProperty("animation-delay");
-      }, { once: true });
     }
+  }
 
-    function animateScreenElements(screenEl){
-      if(!screenEl) return;
-      const items = Array.from(screenEl.querySelectorAll("[data-animate]"));
-      items.forEach((el, idx) => {
-        const animation = el.dataset.animate;
-        const delay = el.dataset.animateDelay || `${Math.min(idx * 0.06, 0.5)}s`;
-        animateElement(el, animation, delay);
-      });
+  function cleanupAnimateInline(el){
+    if(!el) return;
+    el.style.removeProperty("--animate-delay");
+    el.style.removeProperty("--animate-duration");
+  }
+
+  function parseDelayToMs(delay){
+    if(delay == null) return 0;
+    if(typeof delay === "number") return delay;
+
+    const s = String(delay).trim();
+    if(!s) return 0;
+
+    // soporta "0.2s" o "200ms"
+    if(s.endsWith("ms")) return Math.max(0, parseFloat(s));
+    if(s.endsWith("s")) return Math.max(0, Math.round(parseFloat(s) * 1000));
+
+    const n = parseFloat(s);
+    if(Number.isFinite(n)){
+      // si te pasan "0.2" lo interpretamos como segundos (compat con tu código viejo)
+      return n <= 5 ? Math.round(n * 1000) : Math.round(n);
     }
+    return 0;
+  }
 
-    function focusForScreen(key){
-      const map = {
-        setup: () => $("#namesInput"),
-        pass: () => $("#btnImReady"),
-        reveal: () => $("#btnHideNext"),
-        play: () => $("#btnFinish"),
-        summary: () => $("#btnBackSetup"),
+  function playAnim(el, anim, { delayMs = 0, durationMs = 520, keep = false } = {}){
+    if(!el || !anim) return Promise.resolve();
+
+    // Si no tenía animate__animated antes, lo marcamos para poder quitarlo luego
+    const hadAnimated = el.classList.contains("animate__animated");
+    if(!hadAnimated) el.dataset.animOwned = "1";
+
+    el.classList.add("animate__animated");
+    el.style.setProperty("--animate-delay", `${delayMs}ms`);
+    el.style.setProperty("--animate-duration", `${durationMs}ms`);
+
+    // Importante: sacar animaciones previas (excepto animate__animated) y reflow
+    stripAnimateClasses(el);
+    void el.offsetWidth;
+
+    el.classList.add(anim);
+
+    return new Promise((resolve) => {
+      const onEnd = () => {
+        // En animaciones de salida conviene keep para evitar "snap" visual
+        if(!keep){
+          el.classList.remove(anim);
+          cleanupAnimateInline(el);
+
+          if(el.dataset.animOwned === "1"){
+            el.classList.remove("animate__animated");
+            delete el.dataset.animOwned;
+          }
+        }
+        resolve();
       };
-      try{
-        const el = map[key]?.();
-        if(el) requestAnimationFrame(() => el.focus({ preventScroll: true }));
-      }catch(e){}
-    }
+      el.addEventListener("animationend", onEnd, { once: true });
+    });
+  }
 
-    let currentScreen = "setup";
+  // Wrapper compatible con tu código viejo (mantiene la firma)
+  function animateElement(el, animation, delay = null){
+    const delayMs = parseDelayToMs(delay);
+    // No await: dejamos que corra en background (como antes)
+    playAnim(el, animation, { delayMs, durationMs: 520 });
+  }
 
-    function showScreen(key){
-      if(!screens[key]) return;
-      const prevKey = currentScreen;
-      if(prevKey && prevKey !== key && screens[prevKey]){
-        const prevEl = screens[prevKey];
-        prevEl.classList.remove("active");
+  function animateScreenElements(screenEl){
+    if(!screenEl) return;
+    const items = Array.from(screenEl.querySelectorAll("[data-animate]"));
+    items.forEach((el, idx) => {
+      const anim = el.dataset.animate;
+      const delayMs = el.dataset.animateDelay
+        ? parseDelayToMs(el.dataset.animateDelay)
+        : Math.min(idx * 60, 420); // stagger suave
+
+      // Duración un poco más corta en elementos chicos
+      const durationMs = el.matches(".badge,.pill,.chip,.dot,.txt") ? 420 : 520;
+
+      playAnim(el, anim, { delayMs, durationMs });
+    });
+  }
+
+  function focusForScreen(key){
+    const map = {
+      setup: () => document.querySelector(".nameInput"),
+      pass: () => $("#btnImReady"),
+      reveal: () => $("#btnHideNext"),
+      play: () => $("#btnFinish"),
+      summary: () => $("#btnBackSetup"),
+    };
+    try{
+      const el = map[key]?.();
+      if(el) requestAnimationFrame(() => el.focus({ preventScroll: true }));
+    }catch(e){}
+  }
+
+  let currentScreen = "setup";
+  let _navBusy = false;
+
+  async function showScreen(key){
+    if(_navBusy) return;
+    if(!screens[key]) return;
+    if(currentScreen === key) return;
+
+    _navBusy = true;
+    const prevKey = currentScreen;
+    const prevEl = screens[prevKey];
+    const nextEl = screens[key];
+
+    try{
+      // Salida: mantenemos visible el anterior mientras anima
+      if(prevEl && prevEl !== nextEl){
         prevEl.classList.add("leaving");
-        animateElement(prevEl, "animate__fadeOutUp");
-        prevEl.addEventListener("animationend", () => {
-          prevEl.classList.remove("leaving");
-        }, { once: true });
+        prevEl.classList.add("active");
+
+        await playAnim(prevEl, "animate__fadeOutUp", { durationMs: 260, keep: true });
+
+        // Ocultamos y limpiamos
+        prevEl.classList.remove("active");
+        prevEl.classList.remove("leaving");
+
+        stripAnimateClasses(prevEl);
+        cleanupAnimateInline(prevEl);
+        if(prevEl.dataset.animOwned === "1"){
+          prevEl.classList.remove("animate__animated");
+          delete prevEl.dataset.animOwned;
+        }
       }
-      screens[key].classList.remove("leaving");
-      screens[key].classList.add("active");
-      animateElement(screens[key], "animate__fadeInUp");
-      animateScreenElements(screens[key]);
+
+      // Entrada
+      nextEl.classList.add("active");
+      await playAnim(nextEl, "animate__fadeInUp", { durationMs: 320 });
+
+      // Animaciones internas: dispararlas DESPUÉS de que el screen entró
+      requestAnimationFrame(() => animateScreenElements(nextEl));
+
       currentScreen = key;
       updateSteps(key);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // Evitar jank: sin smooth durante animaciones
+      window.scrollTo({ top: 0, behavior: "auto" });
+
       focusForScreen(key);
+    } finally {
+      _navBusy = false;
     }
-    function vibrate(ms=18){
-      try{ if (navigator.vibrate) navigator.vibrate(ms); }catch(e){}
+  }
+
+  function vibrate(ms=18){
+    try{ if (navigator.vibrate) navigator.vibrate(ms); }catch(e){}
+  }
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i], a[j]] = [a[j], a[i]];
     }
-    function shuffle(arr){
-      const a = arr.slice();
-      for(let i=a.length-1;i>0;i--){
-        const j = Math.floor(Math.random()*(i+1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
+    return a;
+  }
+
+  function sampleOne(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  // LocalStorage (nombres y configuración)
+  const LS = {
+    names: "impostor_ar_names_v1",
+    impostors: "impostor_ar_impostors_v1",
+    theme: "impostor_ar_theme_v1",
+    categories: "impostor_ar_categories_v1",
+  };
+
+  function storageGet(key){
+    try{ return localStorage.getItem(key); }catch(e){ return null; }
+  }
+
+  function storageSet(key, val){
+    try{ localStorage.setItem(key, String(val)); }catch(e){}
+  }
+
+  function storageRemove(key){
+    try{ localStorage.removeItem(key); }catch(e){}
+  }
+
+  function storageGetJSON(key, fallback = null){
+    const raw = storageGet(key);
+    if(!raw) return fallback;
+    try{ return JSON.parse(raw); }catch(e){ return fallback; }
+  }
+
+  function storageSetJSON(key, val){
+    storageSet(key, JSON.stringify(val));
+  }
+
+  // State
+  let wordsDB = [];
+  let fullWordsDB = [];
+  let categories = [];
+  let selectedCategories = new Set();
+  let draftCategories = new Set();
+  let impostorsCount = 1;
+
+  let players = [];
+  let impostorIdx = [];
+  let currentPlayer = 0;
+
+  let round = { palabra: "", pista: "", categoria: "" };
+
+  const categoryLabels = {
+    objetos: "Objetos",
+    personas: "Personas",
+    naturaleza: "Naturaleza",
+    animales: "Animales",
+    tecnologia: "Tecnología",
+    lugares: "Lugares",
+    comida: "Comida",
+    acciones: "Acciones",
+  };
+
+  function getCategoryLabel(category){
+    if(categoryLabels[category]) return categoryLabels[category];
+    return category
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (letter) => letter.toUpperCase());
+  }
+
+  // Elements
+  const dbCount = $("#dbCount");
+  const themeToggle = $("#themeToggle");
+  const brandLogo = $("#brandLogo");
+  const passLogo = $("#passLogo");
+  const favicon = $("#favicon");
+
+  const segBtns = Array.from(document.querySelectorAll(".segBtn"));
+  const namesGrid = $("#namesGrid");
+  const namesChips = $("#namesChips");
+  const btnStart = $("#btnStart");
+  const btnClearNames = $("#btnClearNames");
+  const minPlayersEl = $("#minPlayers");
+  const savedStateEl = $("#savedState");
+  const savedPill = $("#savedPill");
+  const btnCategories = $("#btnCategories");
+  const categoryCount = $("#categoryCount");
+  const categoryPill = $("#categoryPill");
+  const categorySummary = $("#categorySummary");
+  const categoryDialog = $("#categoryDialog");
+  const categoryList = $("#categoryList");
+  const btnSaveCategories = $("#btnSaveCategories");
+  const btnCatAll = $("#btnCatAll");
+  const btnCatNone = $("#btnCatNone");
+  const btnCloseCategories = $("#btnCloseCategories");
+
+  const passIdx = $("#passIdx");
+  const passTotal = $("#passTotal");
+  const passName = $("#passName");
+  const btnImReady = $("#btnImReady");
+  const btnAbort = $("#btnAbort");
+
+  const revealName = $("#revealName");
+  const roleBadge = $("#roleBadge");
+  const secretMain = $("#secretMain");
+  const secretSub = $("#secretSub");
+  const secretWrap = $("#secretWrap");
+  const btnHideNext = $("#btnHideNext");
+
+  const playImpostors = $("#playImpostors");
+  const playPlayers = $("#playPlayers");
+  const btnFinish = $("#btnFinish");
+  const btnNew = $("#btnNew");
+
+  const sumWord = $("#sumWord");
+  const sumClue = $("#sumClue");
+  const sumImpostors = $("#sumImpostors");
+  const sumCrew = $("#sumCrew");
+  const btnBackSetup = $("#btnBackSetup");
+
+  function applyTheme(theme){
+    const root = document.documentElement;
+    const useDark = theme === "dark";
+    root.dataset.theme = useDark ? "dark" : "light";
+    const logoSrc = useDark ? "logo_negro.svg" : "logo_blanco.svg";
+    if(brandLogo) brandLogo.src = logoSrc;
+    if(passLogo) passLogo.src = logoSrc;
+    if(favicon) favicon.href = logoSrc;
+    if(themeToggle){
+      themeToggle.textContent = useDark ? "Modo claro" : "Modo oscuro";
+      themeToggle.setAttribute("aria-pressed", useDark ? "true" : "false");
     }
-    function sampleOne(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  }
 
-    // LocalStorage (nombres y configuración)
-    const LS = {
-      names: "impostor_ar_names_v1",
-      impostors: "impostor_ar_impostors_v1",
-      theme: "impostor_ar_theme_v1",
-      categories: "impostor_ar_categories_v1",
-    };
-    function storageGet(key){
-      try{ return localStorage.getItem(key); }catch(e){ return null; }
-    }
-    function storageSet(key, val){
-      try{ localStorage.setItem(key, String(val)); }catch(e){}
-    }
-    function storageRemove(key){
-      try{ localStorage.removeItem(key); }catch(e){}
-    }
-    function storageGetJSON(key, fallback = null){
-      const raw = storageGet(key);
-      if(!raw) return fallback;
-      try{ return JSON.parse(raw); }catch(e){ return fallback; }
-    }
-    function storageSetJSON(key, val){
-      storageSet(key, JSON.stringify(val));
-    }
+  function loadThemeFromStorage(){
+    const savedTheme = storageGet(LS.theme);
+    const theme = savedTheme === "dark" ? "dark" : "light";
+    applyTheme(theme);
+  }
 
+  // Load JSON (siempre en mismo directorio)
+  async function loadJSONOrDie(){
+    const res = await fetch("./impostor_500.json", { cache: "no-store" });
+    if(!res.ok) throw new Error("No se pudo cargar el mazo.");
+    const data = await res.json();
+    validateDB(data);
+    setDB(data);
+  }
 
-    // State
-    let wordsDB = [];
-    let fullWordsDB = [];
-    let categories = [];
-    let selectedCategories = new Set();
-    let draftCategories = new Set();
-    let impostorsCount = 1;
+  function validateDB(data){
+    if(!Array.isArray(data)) throw new Error("Mazo inválido.");
+    if(data.length < 50) throw new Error("Mazo inválido.");
+    const x = data[0];
+    if(!x || typeof x !== "object") throw new Error("Mazo inválido.");
+    if(!("palabra" in x) || !("pista" in x) || !("categoria" in x)) throw new Error("Mazo inválido.");
+  }
 
-    let players = [];
-    let impostorIdx = [];
-    let currentPlayer = 0;
+  function setDB(data){
+    fullWordsDB = data
+      .filter(x => x && typeof x.palabra === "string" && typeof x.pista === "string" && typeof x.categoria === "string")
+      .map(x => ({
+        palabra: x.palabra.trim(),
+        pista: x.pista.trim(),
+        categoria: x.categoria.trim(),
+      }))
+      .filter(x => x.palabra.length && x.pista.length && x.categoria.length);
 
-    let round = { palabra: "", pista: "", categoria: "" };
+    categories = Array.from(new Set(fullWordsDB.map(x => x.categoria)))
+      .sort((a, b) => getCategoryLabel(a).localeCompare(getCategoryLabel(b), "es"));
 
-    const categoryLabels = {
-      objetos: "Objetos",
-      personas: "Personas",
-      naturaleza: "Naturaleza",
-      animales: "Animales",
-      tecnologia: "Tecnología",
-      lugares: "Lugares",
-      comida: "Comida",
-      acciones: "Acciones",
-    };
+    loadCategoriesFromStorage();
+    applyCategoryFilter();
+  }
 
-    function getCategoryLabel(category){
-      if(categoryLabels[category]) return categoryLabels[category];
-      return category
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, (letter) => letter.toUpperCase());
-    }
-
-    // Elements
-    const dbCount = $("#dbCount");
-    const themeToggle = $("#themeToggle");
-    const brandLogo = $("#brandLogo");
-    const passLogo = $("#passLogo");
-    const favicon = $("#favicon");
-
-    const segBtns = Array.from(document.querySelectorAll(".segBtn"));
-    const namesGrid = $("#namesGrid");
-    const namesChips = $("#namesChips");
-    const btnStart = $("#btnStart");
-    const btnClearNames = $("#btnClearNames");
-    const minPlayersEl = $("#minPlayers");
-    const savedStateEl = $("#savedState");
-    const savedPill = $("#savedPill");
-    const btnCategories = $("#btnCategories");
-    const categoryCount = $("#categoryCount");
-    const categoryPill = $("#categoryPill");
-    const categorySummary = $("#categorySummary");
-    const categoryDialog = $("#categoryDialog");
-    const categoryList = $("#categoryList");
-    const btnSaveCategories = $("#btnSaveCategories");
-    const btnCatAll = $("#btnCatAll");
-    const btnCatNone = $("#btnCatNone");
-    const btnCloseCategories = $("#btnCloseCategories");
-
-    const passIdx = $("#passIdx");
-    const passTotal = $("#passTotal");
-    const passName = $("#passName");
-    const btnImReady = $("#btnImReady");
-    const btnAbort = $("#btnAbort");
-
-    const revealName = $("#revealName");
-    const roleBadge = $("#roleBadge");
-    const secretMain = $("#secretMain");
-    const secretSub = $("#secretSub");
-    const secretWrap = $("#secretWrap");
-    const btnHideNext = $("#btnHideNext");
-
-    const playImpostors = $("#playImpostors");
-    const playPlayers = $("#playPlayers");
-    const btnFinish = $("#btnFinish");
-    const btnNew = $("#btnNew");
-
-    const sumWord = $("#sumWord");
-    const sumClue = $("#sumClue");
-    const sumImpostors = $("#sumImpostors");
-    const sumCrew = $("#sumCrew");
-    const btnBackSetup = $("#btnBackSetup");
-
-    function applyTheme(theme){
-      const root = document.documentElement;
-      const useDark = theme === "dark";
-      root.dataset.theme = useDark ? "dark" : "light";
-      const logoSrc = useDark ? "logo_negro.svg" : "logo_blanco.svg";
-      if(brandLogo) brandLogo.src = logoSrc;
-      if(passLogo) passLogo.src = logoSrc;
-      if(favicon) favicon.href = logoSrc;
-      if(themeToggle){
-        themeToggle.textContent = useDark ? "Modo claro" : "Modo oscuro";
-        themeToggle.setAttribute("aria-pressed", useDark ? "true" : "false");
-      }
-    }
-
-    function loadThemeFromStorage(){
-      const savedTheme = storageGet(LS.theme);
-      const theme = savedTheme === "dark" ? "dark" : "light";
-      applyTheme(theme);
-    }
-
-    // Load JSON (siempre en mismo directorio)
-    async function loadJSONOrDie(){
-      const res = await fetch("./impostor_500.json", { cache: "no-store" });
-      if(!res.ok) throw new Error("No se pudo cargar el mazo.");
-      const data = await res.json();
-      validateDB(data);
-      setDB(data);
-    }
-
-    function validateDB(data){
-      if(!Array.isArray(data)) throw new Error("Mazo inválido.");
-      if(data.length < 50) throw new Error("Mazo inválido.");
-      const x = data[0];
-      if(!x || typeof x !== "object") throw new Error("Mazo inválido.");
-      if(!("palabra" in x) || !("pista" in x) || !("categoria" in x)) throw new Error("Mazo inválido.");
-    }
-
-    function setDB(data){
-      fullWordsDB = data
-        .filter(x => x && typeof x.palabra === "string" && typeof x.pista === "string" && typeof x.categoria === "string")
-        .map(x => ({
-          palabra: x.palabra.trim(),
-          pista: x.pista.trim(),
-          categoria: x.categoria.trim(),
-        }))
-        .filter(x => x.palabra.length && x.pista.length && x.categoria.length);
-
-      categories = Array.from(new Set(fullWordsDB.map(x => x.categoria)))
-        .sort((a, b) => getCategoryLabel(a).localeCompare(getCategoryLabel(b), "es"));
-      loadCategoriesFromStorage();
-      applyCategoryFilter();
-    }
-
-    // Players
-    function parseNames(list){
-      const raw = list.map((value) => value.trim()).filter(Boolean);
-      const seen = new Set();
-      const unique = [];
-      for(const n of raw){
-        const key = n.toLowerCase();
-        if(!seen.has(key)){
-          seen.add(key);
-          unique.push(n);
-        }
-      }
-      return unique;
-    }
-
-
-    function getNameValues(){
-      if(!namesGrid) return [];
-      return Array.from(namesGrid.querySelectorAll(".nameInput")).map((input) => input.value);
-    }
-
-    function normalizedNames(){
-      return parseNames(getNameValues()).join("\n");
-    }
-
-    function ensureNameInputs(){
-      if(!namesGrid) return;
-      const inputs = Array.from(namesGrid.querySelectorAll(".nameInput"));
-      const maxPlayers = 10;
-      const filledCount = inputs.filter((input) => input.value.trim().length > 0).length;
-      const desiredCount = Math.min(maxPlayers, Math.max(3, Math.min(maxPlayers, filledCount + 1)));
-
-      if(inputs.length < desiredCount){
-        for(let i = inputs.length; i < desiredCount; i++){
-          const input = document.createElement("input");
-          input.className = "nameInput";
-          input.type = "text";
-          input.inputMode = "text";
-          input.autocomplete = "off";
-          input.placeholder = `Jugador ${i + 1}`;
-          input.dataset.index = String(i);
-          input.addEventListener("input", handleNamesInput);
-          input.addEventListener("blur", handleNamesBlur);
-          namesGrid.appendChild(input);
-        }
-      }
-
-      if(inputs.length > desiredCount){
-        for(let i = inputs.length - 1; i >= desiredCount; i--){
-          namesGrid.removeChild(inputs[i]);
-        }
+  // Players
+  function parseNames(list){
+    const raw = list.map((value) => value.trim()).filter(Boolean);
+    const seen = new Set();
+    const unique = [];
+    for(const n of raw){
+      const key = n.toLowerCase();
+      if(!seen.has(key)){
+        seen.add(key);
+        unique.push(n);
       }
     }
+    return unique;
+  }
 
-    function renderInputsFromSaved(text){
-      if(!namesGrid) return;
-      const values = text.split(/\r?\n/).map((value) => value.trim()).filter(Boolean);
-      const maxPlayers = 10;
-      const count = Math.min(maxPlayers, Math.max(3, values.length + 1));
-      namesGrid.innerHTML = "";
-      for(let i = 0; i < count; i++){
+  function getNameValues(){
+    if(!namesGrid) return [];
+    return Array.from(namesGrid.querySelectorAll(".nameInput")).map((input) => input.value);
+  }
+
+  function normalizedNames(){
+    return parseNames(getNameValues()).join("\n");
+  }
+
+  function ensureNameInputs(){
+    if(!namesGrid) return;
+    const inputs = Array.from(namesGrid.querySelectorAll(".nameInput"));
+    const maxPlayers = 10;
+    const filledCount = inputs.filter((input) => input.value.trim().length > 0).length;
+    const desiredCount = Math.min(maxPlayers, Math.max(3, Math.min(maxPlayers, filledCount + 1)));
+
+    if(inputs.length < desiredCount){
+      for(let i = inputs.length; i < desiredCount; i++){
         const input = document.createElement("input");
         input.className = "nameInput";
         input.type = "text";
@@ -516,402 +593,441 @@
         input.autocomplete = "off";
         input.placeholder = `Jugador ${i + 1}`;
         input.dataset.index = String(i);
-        input.value = values[i] || "";
         input.addEventListener("input", handleNamesInput);
         input.addEventListener("blur", handleNamesBlur);
         namesGrid.appendChild(input);
       }
     }
 
-    function updateSavedUI(){
-      const saved = storageGet(LS.names) || "";
-      const current = normalizedNames();
-      let label = "No guardados";
-      if(saved){
-        label = (saved === current) ? "Guardados" : "Editados";
-      }
-      if(savedStateEl) savedStateEl.textContent = label;
-      if(savedPill) savedPill.classList.toggle("dirty", saved && saved !== current);
-    }
-
-    function saveSetupToStorage(){
-      storageSet(LS.impostors, impostorsCount);
-      storageSet(LS.names, normalizedNames());
-      updateSavedUI();
-    }
-
-    function loadSetupFromStorage(){
-      const savedNames = storageGet(LS.names);
-      if(savedNames && typeof savedNames === "string"){
-        renderInputsFromSaved(savedNames);
-      }else{
-        renderInputsFromSaved("");
-      }
-      const savedImp = Number(storageGet(LS.impostors));
-      if(savedImp === 1 || savedImp === 2){
-        impostorsCount = savedImp;
-      }
-      segBtns.forEach(b => {
-        const n = Number(b.dataset.impostors);
-        b.setAttribute("aria-pressed", n === impostorsCount ? "true" : "false");
-      });
-      updateSavedUI();
-    }
-
-    function loadCategoriesFromStorage(){
-      const saved = storageGetJSON(LS.categories, []);
-      if(Array.isArray(saved)){
-        selectedCategories = new Set(saved.filter((cat) => categories.includes(cat)));
-      }
-      if(selectedCategories.size === 0){
-        selectedCategories = new Set(categories);
+    if(inputs.length > desiredCount){
+      for(let i = inputs.length - 1; i >= desiredCount; i--){
+        namesGrid.removeChild(inputs[i]);
       }
     }
+  }
 
-    function saveCategoriesToStorage(){
-      storageSetJSON(LS.categories, Array.from(selectedCategories));
+  function renderInputsFromSaved(text){
+    if(!namesGrid) return;
+    const values = text.split(/\r?\n/).map((value) => value.trim()).filter(Boolean);
+    const maxPlayers = 10;
+    const count = Math.min(maxPlayers, Math.max(3, values.length + 1));
+    namesGrid.innerHTML = "";
+    for(let i = 0; i < count; i++){
+      const input = document.createElement("input");
+      input.className = "nameInput";
+      input.type = "text";
+      input.inputMode = "text";
+      input.autocomplete = "off";
+      input.placeholder = `Jugador ${i + 1}`;
+      input.dataset.index = String(i);
+      input.value = values[i] || "";
+      input.addEventListener("input", handleNamesInput);
+      input.addEventListener("blur", handleNamesBlur);
+      namesGrid.appendChild(input);
     }
+  }
 
-    function updateCategorySummary(){
-      const total = categories.length;
-      const selected = selectedCategories.size;
-      if(categoryCount) categoryCount.textContent = `${selected}/${total}`;
-      if(categoryPill) categoryPill.classList.toggle("dirty", selected === 0);
-      if(!categorySummary) return;
-      if(selected === 0){
-        categorySummary.textContent = "Seleccioná al menos una categoría.";
-        return;
-      }
-      if(selected === total){
-        categorySummary.textContent = "Todas las categorías activas.";
-        return;
-      }
-      const list = categories
-        .filter((category) => selectedCategories.has(category))
-        .map(getCategoryLabel)
-        .slice(0, 3);
-      const extra = selected - list.length;
-      const suffix = extra > 0 ? ` y ${extra} más` : "";
-      categorySummary.textContent = `Activas: ${list.join(", ")}${suffix}.`;
+  function updateSavedUI(){
+    const saved = storageGet(LS.names) || "";
+    const current = normalizedNames();
+    let label = "No guardados";
+    if(saved){
+      label = (saved === current) ? "Guardados" : "Editados";
     }
+    if(savedStateEl) savedStateEl.textContent = label;
+    if(savedPill) savedPill.classList.toggle("dirty", saved && saved !== current);
+  }
 
-    function applyCategoryFilter(){
-      wordsDB = fullWordsDB.filter((w) => selectedCategories.has(w.categoria));
-      dbCount.textContent = wordsDB.length.toString();
-      $("#dbPill").style.borderColor = "rgba(27,122,100,.30)";
-      $("#dbPill").style.background = "rgba(27,122,100,.10)";
-      updateCategorySummary();
-    }
+  function saveSetupToStorage(){
+    storageSet(LS.impostors, impostorsCount);
+    storageSet(LS.names, normalizedNames());
+    updateSavedUI();
+  }
 
-    function renderCategoryDialog(){
-      if(!categoryList) return;
-      categoryList.innerHTML = "";
-      categories.forEach((cat) => {
-        const row = document.createElement("label");
-        row.className = "categoryItem";
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.value = cat;
-        checkbox.checked = draftCategories.has(cat);
-        checkbox.addEventListener("change", () => {
-          if(checkbox.checked) draftCategories.add(cat);
-          else draftCategories.delete(cat);
-        });
-        const span = document.createElement("span");
-        span.textContent = getCategoryLabel(cat);
-        row.appendChild(checkbox);
-        row.appendChild(span);
-        categoryList.appendChild(row);
-      });
-    }
-
-    function openCategoryDialog(){
-      draftCategories = new Set(selectedCategories);
-      renderCategoryDialog();
-      if(categoryDialog?.showModal){
-        categoryDialog.showModal();
-      }else if(categoryDialog){
-        categoryDialog.setAttribute("open", "true");
-      }
-    }
-
-    function closeCategoryDialog(){
-      if(categoryDialog?.close){
-        categoryDialog.close();
-      }else if(categoryDialog){
-        categoryDialog.removeAttribute("open");
-      }
-    }
-
-    function toggleAllCategories(checked){
-      draftCategories = checked ? new Set(categories) : new Set();
-      renderCategoryDialog();
-    }
-
-    function refreshChips(){
-      ensureNameInputs();
-      players = parseNames(getNameValues());
-      namesChips.innerHTML = "";
-
-      players.forEach((name, idx) => {
-        const chip = document.createElement("div");
-        chip.className = "chip";
-        chip.innerHTML = `<span>${name}</span>`;
-        const x = document.createElement("button");
-        x.type = "button";
-        x.textContent = "×";
-        x.title = "Quitar";
-        x.addEventListener("click", () => {
-          chip.classList.add("removing");
-          vibrate(12);
-          window.setTimeout(() => {
-            const arr = parseNames(getNameValues());
-            arr.splice(idx, 1);
-            renderInputsFromSaved(arr.join("\n"));
-            ensureNameInputs();
-            refreshChips();
-          }, 180);
-        });
-        chip.appendChild(x);
-        namesChips.appendChild(chip);
-      });
-
-      const minPlayers = Math.max(3, impostorsCount + 2);
-      btnStart.disabled = !(wordsDB.length > 0 && selectedCategories.size > 0 && players.length >= minPlayers);
-      if(minPlayersEl) minPlayersEl.textContent = String(minPlayers);
-      updateSavedUI();
-    }
-
-    // Round setup
-    function setupNewRound(){
-      if(!wordsDB.length) return;
-
-      const pick = sampleOne(wordsDB);
-      round.palabra = pick.palabra;
-      round.pista = pick.pista;
-      round.categoria = pick.categoria;
-
-      const idx = shuffle([...players.keys()]);
-      impostorIdx = idx.slice(0, impostorsCount).sort((a,b)=>a-b);
-
-      currentPlayer = 0;
-
-      passTotal.textContent = players.length;
-      updatePass();
-    }
-
-    function updatePass(){
-      passIdx.textContent = (currentPlayer + 1);
-      passName.textContent = players[currentPlayer] ?? "—";
-    }
-
-    function isImpostor(i){ return impostorIdx.includes(i); }
-
-    // Reveal (directo: palabra o pista)
-    function openReveal(){
-      const name = players[currentPlayer];
-      revealName.textContent = name;
-
-      const imp = isImpostor(currentPlayer);
-
-      if(imp){
-        roleBadge.className = "badge bad";
-        roleBadge.textContent = "SOS IMPOSTOR 😈";
-        secretMain.textContent = round.pista;
-        secretSub.textContent = `Categoría: ${getCategoryLabel(round.categoria)} · ${round.palabra.length} letras. Disimulá y tratá de adivinar la palabra.`;
-      }else{
-        roleBadge.className = "badge good";
-        roleBadge.textContent = "NO SOS IMPOSTOR ✅";
-        secretMain.textContent = round.palabra;
-        secretSub.textContent = "Guardate la palabra y disimulá.";
-      }
-
-      if(secretWrap){
-        animateElement(secretWrap, "animate__zoomIn");
-      }
-      vibrate(14);
-      showScreen("reveal");
-    }
-
-    function nextPlayerOrPlay(){
-      currentPlayer++;
-      if(currentPlayer >= players.length){
-        playImpostors.textContent = String(impostorsCount);
-        playPlayers.textContent = String(players.length);
-        vibrate(20);
-        showScreen("play");
-      }else{
-        updatePass();
-        showScreen("pass");
-      }
-    }
-
-    // Summary
-    function renderSummary(){
-      sumWord.textContent = round.palabra;
-      sumClue.textContent = `Pista: ${round.pista} · Categoría: ${getCategoryLabel(round.categoria)}`;
-
-      sumImpostors.innerHTML = "";
-      sumCrew.innerHTML = "";
-
-      const impSet = new Set(impostorIdx);
-      players.forEach((p, i) => {
-        const chip = document.createElement("div");
-        chip.className = "chip";
-        chip.innerHTML = `<span>${p}</span>`;
-        if(impSet.has(i)) sumImpostors.appendChild(chip);
-        else sumCrew.appendChild(chip);
-      });
-    }
-
-    // Events
-    segBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        impostorsCount = Number(btn.dataset.impostors);
-        segBtns.forEach(b => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
-        refreshChips();
-        storageSet(LS.impostors, impostorsCount);
-        updateSavedUI();
-        vibrate(12);
-      });
-    });
-
-    function handleNamesInput(){
-      ensureNameInputs();
-      refreshChips();
-    }
-
-    function handleNamesBlur(){
-      ensureNameInputs();
-      refreshChips();
-    }
-
-    if(namesGrid){
-      namesGrid.addEventListener("input", (event) => {
-        if(event.target && event.target.classList.contains("nameInput")){
-          handleNamesInput();
-        }
-      });
-      namesGrid.addEventListener("blur", (event) => {
-        if(event.target && event.target.classList.contains("nameInput")){
-          handleNamesBlur();
-        }
-      }, true);
-    }
-    if(btnCategories){
-      btnCategories.addEventListener("click", openCategoryDialog);
-    }
-    if(btnCloseCategories){
-      btnCloseCategories.addEventListener("click", () => {
-        closeCategoryDialog();
-        vibrate(10);
-      });
-    }
-    if(btnCatAll){
-      btnCatAll.addEventListener("click", () => {
-        toggleAllCategories(true);
-        vibrate(10);
-      });
-    }
-    if(btnCatNone){
-      btnCatNone.addEventListener("click", () => {
-        toggleAllCategories(false);
-        vibrate(10);
-      });
-    }
-    if(btnSaveCategories){
-      btnSaveCategories.addEventListener("click", () => {
-        selectedCategories = new Set(draftCategories);
-        saveCategoriesToStorage();
-        applyCategoryFilter();
-        refreshChips();
-        closeCategoryDialog();
-        vibrate(12);
-      });
-    }
-
-    if(themeToggle){
-      themeToggle.addEventListener("click", () => {
-        const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-        applyTheme(nextTheme);
-        storageSet(LS.theme, nextTheme);
-        vibrate(12);
-      });
-    }
-
-
-    if(btnClearNames) btnClearNames.addEventListener("click", () => {
-      const hasSaved = !!(storageGet(LS.names) || "").trim();
-      const hasCurrent = getNameValues().some((value) => value.trim().length > 0);
-      if(!hasSaved && !hasCurrent){
-        vibrate(10);
-        return;
-      }
-      const ok = confirm("¿Borrar los nombres guardados y limpiar la lista?");
-      if(!ok) return;
-
-      storageRemove(LS.names);
+  function loadSetupFromStorage(){
+    const savedNames = storageGet(LS.names);
+    if(savedNames && typeof savedNames === "string"){
+      renderInputsFromSaved(savedNames);
+    }else{
       renderInputsFromSaved("");
-      refreshChips();
-      vibrate(18);
+    }
+    const savedImp = Number(storageGet(LS.impostors));
+    if(savedImp === 1 || savedImp === 2){
+      impostorsCount = savedImp;
+    }
+    segBtns.forEach(b => {
+      const n = Number(b.dataset.impostors);
+      b.setAttribute("aria-pressed", n === impostorsCount ? "true" : "false");
     });
+    updateSavedUI();
+  }
 
+  function loadCategoriesFromStorage(){
+    const saved = storageGetJSON(LS.categories, []);
+    if(Array.isArray(saved)){
+      selectedCategories = new Set(saved.filter((cat) => categories.includes(cat)));
+    }
+    if(selectedCategories.size === 0){
+      selectedCategories = new Set(categories);
+    }
+  }
 
-    btnStart.addEventListener("click", () => {
-      refreshChips();
-      saveSetupToStorage();
-      setupNewRound();
-      showScreen("pass");
+  function saveCategoriesToStorage(){
+    storageSetJSON(LS.categories, Array.from(selectedCategories));
+  }
+
+  function updateCategorySummary(){
+    const total = categories.length;
+    const selected = selectedCategories.size;
+    if(categoryCount) categoryCount.textContent = `${selected}/${total}`;
+    if(categoryPill) categoryPill.classList.toggle("dirty", selected === 0);
+    if(!categorySummary) return;
+
+    if(selected === 0){
+      categorySummary.textContent = "Seleccioná al menos una categoría.";
+      return;
+    }
+    if(selected === total){
+      categorySummary.textContent = "Todas las categorías activas.";
+      return;
+    }
+
+    const list = categories
+      .filter((category) => selectedCategories.has(category))
+      .map(getCategoryLabel)
+      .slice(0, 3);
+
+    const extra = selected - list.length;
+    const suffix = extra > 0 ? ` y ${extra} más` : "";
+    categorySummary.textContent = `Activas: ${list.join(", ")}${suffix}.`;
+  }
+
+  function applyCategoryFilter(){
+    wordsDB = fullWordsDB.filter((w) => selectedCategories.has(w.categoria));
+    dbCount.textContent = wordsDB.length.toString();
+    $("#dbPill").style.borderColor = "rgba(27,122,100,.30)";
+    $("#dbPill").style.background = "rgba(27,122,100,.10)";
+    updateCategorySummary();
+  }
+
+  function renderCategoryDialog(){
+    if(!categoryList) return;
+    categoryList.innerHTML = "";
+    categories.forEach((cat) => {
+      const row = document.createElement("label");
+      row.className = "categoryItem";
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = cat;
+      checkbox.checked = draftCategories.has(cat);
+      checkbox.addEventListener("change", () => {
+        if(checkbox.checked) draftCategories.add(cat);
+        else draftCategories.delete(cat);
+      });
+      const span = document.createElement("span");
+      span.textContent = getCategoryLabel(cat);
+      row.appendChild(checkbox);
+      row.appendChild(span);
+      categoryList.appendChild(row);
     });
+  }
 
-    btnAbort.addEventListener("click", () => {
-      showScreen("setup");
-      vibrate(16);
-    });
+  function openCategoryDialog(){
+    draftCategories = new Set(selectedCategories);
+    renderCategoryDialog();
+    if(categoryDialog?.showModal){
+      categoryDialog.showModal();
+    }else if(categoryDialog){
+      categoryDialog.setAttribute("open", "true");
+    }
 
-    btnImReady.addEventListener("click", openReveal);
-    btnHideNext.addEventListener("click", nextPlayerOrPlay);
+    // Animación de entrada del dialog (si tiene data-animate)
+    const card = categoryDialog?.querySelector("[data-animate]");
+    if(card){
+      animateElement(card, card.dataset.animate);
+    }
+  }
 
-    // Finalizar partida sin confirmación
-    btnFinish.addEventListener("click", () => {
-      renderSummary();
-      showScreen("summary");
-      vibrate(24);
-    });
+  function closeCategoryDialog(){
+    if(categoryDialog?.close){
+      categoryDialog.close();
+    }else if(categoryDialog){
+      categoryDialog.removeAttribute("open");
+    }
+  }
 
-    btnNew.addEventListener("click", () => {
-      refreshChips();
-      if(btnStart.disabled){
-        showScreen("setup");
+  function toggleAllCategories(checked){
+    draftCategories = checked ? new Set(categories) : new Set();
+    renderCategoryDialog();
+  }
+
+  function refreshChips(){
+    ensureNameInputs();
+    players = parseNames(getNameValues());
+    namesChips.innerHTML = "";
+
+    players.forEach((name, idx) => {
+      const chip = document.createElement("div");
+      chip.className = "chip";
+      chip.innerHTML = `<span>${name}</span>`;
+      const x = document.createElement("button");
+      x.type = "button";
+      x.textContent = "×";
+      x.title = "Quitar";
+      x.addEventListener("click", () => {
+        chip.classList.add("removing");
         vibrate(12);
-        return;
-      }
-      setupNewRound();
+        window.setTimeout(() => {
+          const arr = parseNames(getNameValues());
+          arr.splice(idx, 1);
+          renderInputsFromSaved(arr.join("\n"));
+          ensureNameInputs();
+          refreshChips();
+        }, 180);
+      });
+      chip.appendChild(x);
+      namesChips.appendChild(chip);
+    });
+
+    const minPlayers = Math.max(3, impostorsCount + 2);
+    btnStart.disabled = !(wordsDB.length > 0 && selectedCategories.size > 0 && players.length >= minPlayers);
+    if(minPlayersEl) minPlayersEl.textContent = String(minPlayers);
+    updateSavedUI();
+  }
+
+  // Round setup
+  function setupNewRound(){
+    if(!wordsDB.length) return;
+
+    const pick = sampleOne(wordsDB);
+    round.palabra = pick.palabra;
+    round.pista = pick.pista;
+    round.categoria = pick.categoria;
+
+    const idx = shuffle([...players.keys()]);
+    impostorIdx = idx.slice(0, impostorsCount).sort((a,b)=>a-b);
+
+    currentPlayer = 0;
+
+    passTotal.textContent = players.length;
+    updatePass();
+  }
+
+  function updatePass(){
+    passIdx.textContent = (currentPlayer + 1);
+    passName.textContent = players[currentPlayer] ?? "—";
+  }
+
+  function isImpostor(i){ return impostorIdx.includes(i); }
+
+  // Reveal (directo: palabra o pista)
+  function openReveal(){
+    const name = players[currentPlayer];
+    revealName.textContent = name;
+
+    const imp = isImpostor(currentPlayer);
+
+    if(imp){
+      roleBadge.className = "badge bad";
+      roleBadge.textContent = "SOS IMPOSTOR 😈";
+      secretMain.textContent = round.pista;
+      secretSub.textContent = `Categoría: ${getCategoryLabel(round.categoria)} · ${round.palabra.length} letras. Disimulá y tratá de adivinar la palabra.`;
+    }else{
+      roleBadge.className = "badge good";
+      roleBadge.textContent = "NO SOS IMPOSTOR ✅";
+      secretMain.textContent = round.palabra;
+      secretSub.textContent = "Guardate la palabra y disimulá.";
+    }
+
+    if(secretWrap){
+      animateElement(secretWrap, "animate__zoomIn");
+    }
+    vibrate(14);
+    showScreen("reveal");
+  }
+
+  function nextPlayerOrPlay(){
+    currentPlayer++;
+    if(currentPlayer >= players.length){
+      playImpostors.textContent = String(impostorsCount);
+      playPlayers.textContent = String(players.length);
+      vibrate(20);
+      showScreen("play");
+    }else{
+      updatePass();
       showScreen("pass");
-      vibrate(16);
-    });
+    }
+  }
 
-    btnBackSetup.addEventListener("click", () => {
+  // Summary
+  function renderSummary(){
+    sumWord.textContent = round.palabra;
+    sumClue.textContent = `Pista: ${round.pista} · Categoría: ${getCategoryLabel(round.categoria)}`;
+
+    sumImpostors.innerHTML = "";
+    sumCrew.innerHTML = "";
+
+    const impSet = new Set(impostorIdx);
+    players.forEach((p, i) => {
+      const chip = document.createElement("div");
+      chip.className = "chip";
+      chip.innerHTML = `<span>${p}</span>`;
+      if(impSet.has(i)) sumImpostors.appendChild(chip);
+      else sumCrew.appendChild(chip);
+    });
+  }
+
+  // Events
+  segBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      impostorsCount = Number(btn.dataset.impostors);
+      segBtns.forEach(b => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
       refreshChips();
-      showScreen("setup");
-      vibrate(14);
+      storageSet(LS.impostors, impostorsCount);
+      updateSavedUI();
+      vibrate(12);
     });
+  });
 
-    // Init
-    (async function init(){
-      try{
-        await loadJSONOrDie();
-      }catch(e){
-        $("#dbPill").style.borderColor = "rgba(138,12,29,.30)";
-        $("#dbPill").style.background = "rgba(138,12,29,.10)";
-        dbCount.textContent = "0";
-        alert("No se pudo iniciar el mazo. Revisá que el archivo esté en la misma carpeta.");
+  function handleNamesInput(){
+    ensureNameInputs();
+    refreshChips();
+  }
+
+  function handleNamesBlur(){
+    ensureNameInputs();
+    refreshChips();
+  }
+
+  if(namesGrid){
+    namesGrid.addEventListener("input", (event) => {
+      if(event.target && event.target.classList.contains("nameInput")){
+        handleNamesInput();
       }
-      loadSetupFromStorage();
-      loadThemeFromStorage();
-      updateCategorySummary();
+    });
+    namesGrid.addEventListener("blur", (event) => {
+      if(event.target && event.target.classList.contains("nameInput")){
+        handleNamesBlur();
+      }
+    }, true);
+  }
+
+  if(btnCategories){
+    btnCategories.addEventListener("click", openCategoryDialog);
+  }
+
+  if(btnCloseCategories){
+    btnCloseCategories.addEventListener("click", () => {
+      closeCategoryDialog();
+      vibrate(10);
+    });
+  }
+
+  if(btnCatAll){
+    btnCatAll.addEventListener("click", () => {
+      toggleAllCategories(true);
+      vibrate(10);
+    });
+  }
+
+  if(btnCatNone){
+    btnCatNone.addEventListener("click", () => {
+      toggleAllCategories(false);
+      vibrate(10);
+    });
+  }
+
+  if(btnSaveCategories){
+    btnSaveCategories.addEventListener("click", () => {
+      selectedCategories = new Set(draftCategories);
+      saveCategoriesToStorage();
+      applyCategoryFilter();
       refreshChips();
-    })();
-  </script>
+      closeCategoryDialog();
+      vibrate(12);
+    });
+  }
+
+  if(themeToggle){
+    themeToggle.addEventListener("click", () => {
+      const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      applyTheme(nextTheme);
+      storageSet(LS.theme, nextTheme);
+      vibrate(12);
+    });
+  }
+
+  if(btnClearNames) btnClearNames.addEventListener("click", () => {
+    const hasSaved = !!(storageGet(LS.names) || "").trim();
+    const hasCurrent = getNameValues().some((value) => value.trim().length > 0);
+    if(!hasSaved && !hasCurrent){
+      vibrate(10);
+      return;
+    }
+    const ok = confirm("¿Borrar los nombres guardados y limpiar la lista?");
+    if(!ok) return;
+
+    storageRemove(LS.names);
+    renderInputsFromSaved("");
+    refreshChips();
+    vibrate(18);
+  });
+
+  btnStart.addEventListener("click", () => {
+    refreshChips();
+    saveSetupToStorage();
+    setupNewRound();
+    showScreen("pass");
+  });
+
+  btnAbort.addEventListener("click", () => {
+    showScreen("setup");
+    vibrate(16);
+  });
+
+  btnImReady.addEventListener("click", openReveal);
+  btnHideNext.addEventListener("click", nextPlayerOrPlay);
+
+  // Finalizar partida sin confirmación
+  btnFinish.addEventListener("click", () => {
+    renderSummary();
+    showScreen("summary");
+    vibrate(24);
+  });
+
+  btnNew.addEventListener("click", () => {
+    refreshChips();
+    if(btnStart.disabled){
+      showScreen("setup");
+      vibrate(12);
+      return;
+    }
+    setupNewRound();
+    showScreen("pass");
+    vibrate(16);
+  });
+
+  btnBackSetup.addEventListener("click", () => {
+    refreshChips();
+    showScreen("setup");
+    vibrate(14);
+  });
+
+  // Init
+  (async function init(){
+    try{
+      await loadJSONOrDie();
+    }catch(e){
+      $("#dbPill").style.borderColor = "rgba(138,12,29,.30)";
+      $("#dbPill").style.background = "rgba(138,12,29,.10)";
+      dbCount.textContent = "0";
+      alert("No se pudo iniciar el mazo. Revisá que el archivo esté en la misma carpeta.");
+    }
+    loadSetupFromStorage();
+    loadThemeFromStorage();
+    updateCategorySummary();
+    refreshChips();
+  })();
+</script>
 </body>
 </html>
