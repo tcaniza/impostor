@@ -46,8 +46,13 @@
         <button type="button" class="segBtn" data-impostors="2" aria-pressed="false">2 impostores</button>
       </div>
 
-      <label>Nombres (uno por línea)</label>
-      <textarea id="namesInput" placeholder="Nombre 1&#10;Nombre 2&#10;Nombre 3&#10;..."></textarea>
+      <label>Nombres</label>
+      <div class="namesGrid" id="namesGrid" aria-label="Lista de jugadores">
+        <input class="nameInput" type="text" inputmode="text" autocomplete="off" placeholder="Jugador 1" data-index="0" />
+        <input class="nameInput" type="text" inputmode="text" autocomplete="off" placeholder="Jugador 2" data-index="1" />
+        <input class="nameInput" type="text" inputmode="text" autocomplete="off" placeholder="Jugador 3" data-index="2" />
+      </div>
+      <p class="tiny hint" id="namesHint">Se agregan más campos automáticamente hasta 10 jugadores.</p>
 
       <div class="chipset" id="namesChips" aria-label="Lista de jugadores"></div>
 
@@ -317,7 +322,7 @@
     const favicon = $("#favicon");
 
     const segBtns = Array.from(document.querySelectorAll(".segBtn"));
-    const namesInput = $("#namesInput");
+    const namesGrid = $("#namesGrid");
     const namesChips = $("#namesChips");
     const btnStart = $("#btnStart");
     const btnClearNames = $("#btnClearNames");
@@ -413,8 +418,8 @@
     }
 
     // Players
-    function parseNames(text){
-      const raw = text.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+    function parseNames(list){
+      const raw = list.map((value) => value.trim()).filter(Boolean);
       const seen = new Set();
       const unique = [];
       for(const n of raw){
@@ -428,8 +433,63 @@
     }
 
 
+    function getNameValues(){
+      if(!namesGrid) return [];
+      return Array.from(namesGrid.querySelectorAll(".nameInput")).map((input) => input.value);
+    }
+
     function normalizedNames(){
-      return parseNames(namesInput.value).join("");
+      return parseNames(getNameValues()).join("\n");
+    }
+
+    function ensureNameInputs(){
+      if(!namesGrid) return;
+      const inputs = Array.from(namesGrid.querySelectorAll(".nameInput"));
+      const maxPlayers = 10;
+      const filledCount = inputs.filter((input) => input.value.trim().length > 0).length;
+      const desiredCount = Math.min(maxPlayers, Math.max(3, Math.min(maxPlayers, filledCount + 1)));
+
+      if(inputs.length < desiredCount){
+        for(let i = inputs.length; i < desiredCount; i++){
+          const input = document.createElement("input");
+          input.className = "nameInput";
+          input.type = "text";
+          input.inputMode = "text";
+          input.autocomplete = "off";
+          input.placeholder = `Jugador ${i + 1}`;
+          input.dataset.index = String(i);
+          input.addEventListener("input", handleNamesInput);
+          input.addEventListener("blur", handleNamesBlur);
+          namesGrid.appendChild(input);
+        }
+      }
+
+      if(inputs.length > desiredCount){
+        for(let i = inputs.length - 1; i >= desiredCount; i--){
+          namesGrid.removeChild(inputs[i]);
+        }
+      }
+    }
+
+    function renderInputsFromSaved(text){
+      if(!namesGrid) return;
+      const values = text.split(/\r?\n/).map((value) => value.trim()).filter(Boolean);
+      const maxPlayers = 10;
+      const count = Math.min(maxPlayers, Math.max(3, values.length + 1));
+      namesGrid.innerHTML = "";
+      for(let i = 0; i < count; i++){
+        const input = document.createElement("input");
+        input.className = "nameInput";
+        input.type = "text";
+        input.inputMode = "text";
+        input.autocomplete = "off";
+        input.placeholder = `Jugador ${i + 1}`;
+        input.dataset.index = String(i);
+        input.value = values[i] || "";
+        input.addEventListener("input", handleNamesInput);
+        input.addEventListener("blur", handleNamesBlur);
+        namesGrid.appendChild(input);
+      }
     }
 
     function updateSavedUI(){
@@ -452,7 +512,9 @@
     function loadSetupFromStorage(){
       const savedNames = storageGet(LS.names);
       if(savedNames && typeof savedNames === "string"){
-        namesInput.value = savedNames;
+        renderInputsFromSaved(savedNames);
+      }else{
+        renderInputsFromSaved("");
       }
       const savedImp = Number(storageGet(LS.impostors));
       if(savedImp === 1 || savedImp === 2){
@@ -556,7 +618,8 @@
     }
 
     function refreshChips(){
-      players = parseNames(namesInput.value);
+      ensureNameInputs();
+      players = parseNames(getNameValues());
       namesChips.innerHTML = "";
 
       players.forEach((name, idx) => {
@@ -571,9 +634,10 @@
           chip.classList.add("removing");
           vibrate(12);
           window.setTimeout(() => {
-            const arr = parseNames(namesInput.value);
+            const arr = parseNames(getNameValues());
             arr.splice(idx, 1);
-            namesInput.value = arr.join("\n");
+            renderInputsFromSaved(arr.join("\n"));
+            ensureNameInputs();
             refreshChips();
           }, 180);
         });
@@ -683,7 +747,28 @@
       });
     });
 
-    namesInput.addEventListener("input", refreshChips);
+    function handleNamesInput(){
+      ensureNameInputs();
+      refreshChips();
+    }
+
+    function handleNamesBlur(){
+      ensureNameInputs();
+      refreshChips();
+    }
+
+    if(namesGrid){
+      namesGrid.addEventListener("input", (event) => {
+        if(event.target && event.target.classList.contains("nameInput")){
+          handleNamesInput();
+        }
+      });
+      namesGrid.addEventListener("blur", (event) => {
+        if(event.target && event.target.classList.contains("nameInput")){
+          handleNamesBlur();
+        }
+      }, true);
+    }
     if(btnCategories){
       btnCategories.addEventListener("click", openCategoryDialog);
     }
@@ -728,7 +813,8 @@
 
     if(btnClearNames) btnClearNames.addEventListener("click", () => {
       const hasSaved = !!(storageGet(LS.names) || "").trim();
-      if(!hasSaved && !namesInput.value.trim()){
+      const hasCurrent = getNameValues().some((value) => value.trim().length > 0);
+      if(!hasSaved && !hasCurrent){
         vibrate(10);
         return;
       }
@@ -736,7 +822,7 @@
       if(!ok) return;
 
       storageRemove(LS.names);
-      namesInput.value = "";
+      renderInputsFromSaved("");
       refreshChips();
       vibrate(18);
     });

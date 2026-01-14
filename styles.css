@@ -257,6 +257,11 @@ body {
   text-align: center;
 }
 
+.tiny.hint {
+  text-align: left;
+  margin-top: -8px;
+}
+
 .spacer {
   flex-grow: 1;
   min-height: 20px;
@@ -286,6 +291,30 @@ textarea {
 
 textarea:focus {
   border-color: var(--primary);
+}
+
+/* --- NAME INPUTS --- */
+.namesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.nameInput {
+  width: 100%;
+  background: var(--bg-input);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-main);
+  padding: 12px 14px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.nameInput:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
 }
 
 /* Segmented Control (1 impostor / 2 impostores) */
