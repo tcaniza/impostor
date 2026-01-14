@@ -218,9 +218,22 @@
       }catch(e){}
     }
 
+    let currentScreen = "setup";
+
     function showScreen(key){
-      for (const k of Object.keys(screens)) screens[k].classList.remove("active");
+      if(!screens[key]) return;
+      const prevKey = currentScreen;
+      if(prevKey && prevKey !== key && screens[prevKey]){
+        const prevEl = screens[prevKey];
+        prevEl.classList.remove("active");
+        prevEl.classList.add("leaving");
+        prevEl.addEventListener("animationend", () => {
+          prevEl.classList.remove("leaving");
+        }, { once: true });
+      }
+      screens[key].classList.remove("leaving");
       screens[key].classList.add("active");
+      currentScreen = key;
       updateSteps(key);
       window.scrollTo({ top: 0, behavior: "smooth" });
       focusForScreen(key);
@@ -279,18 +292,14 @@
     let round = { palabra: "", pista: "", categoria: "" };
 
     const categoryLabels = {
-      bebida: "Bebidas",
-      calle_y_comercio: "Calle y comercio",
-      clima_ropa: "Clima y ropa",
+      objetos: "Objetos",
+      personas: "Personas",
+      naturaleza: "Naturaleza",
+      animales: "Animales",
+      tecnologia: "Tecnología",
+      lugares: "Lugares",
       comida: "Comida",
-      escuela: "Escuela",
-      futbol: "Fútbol",
-      hogar: "Hogar",
-      ocio_y_cultura: "Ocio y cultura",
-      salud_y_cuerpo: "Salud y cuerpo",
-      slang_argento: "Expresiones argentinas",
-      trabajo_y_tramites: "Trabajo y trámites",
-      transporte: "Transporte",
+      acciones: "Acciones",
     };
 
     function getCategoryLabel(category){
@@ -336,6 +345,7 @@
     const roleBadge = $("#roleBadge");
     const secretMain = $("#secretMain");
     const secretSub = $("#secretSub");
+    const secretWrap = $("#secretWrap");
     const btnHideNext = $("#btnHideNext");
 
     const playImpostors = $("#playImpostors");
@@ -371,7 +381,7 @@
 
     // Load JSON (siempre en mismo directorio)
     async function loadJSONOrDie(){
-      const res = await fetch("./impostor_argentina_500.json", { cache: "no-store" });
+      const res = await fetch("./impostor_500.json", { cache: "no-store" });
       if(!res.ok) throw new Error("No se pudo cargar el mazo.");
       const data = await res.json();
       validateDB(data);
@@ -558,11 +568,14 @@
         x.textContent = "×";
         x.title = "Quitar";
         x.addEventListener("click", () => {
-          const arr = parseNames(namesInput.value);
-          arr.splice(idx, 1);
-          namesInput.value = arr.join("\n");
-          refreshChips();
+          chip.classList.add("removing");
           vibrate(12);
+          window.setTimeout(() => {
+            const arr = parseNames(namesInput.value);
+            arr.splice(idx, 1);
+            namesInput.value = arr.join("\n");
+            refreshChips();
+          }, 180);
         });
         chip.appendChild(x);
         namesChips.appendChild(chip);
@@ -618,6 +631,11 @@
         secretSub.textContent = "Guardate la palabra y disimulá.";
       }
 
+      if(secretWrap){
+        secretWrap.classList.remove("animate");
+        void secretWrap.offsetWidth;
+        secretWrap.classList.add("animate");
+      }
       vibrate(14);
       showScreen("reveal");
     }
