@@ -1,0 +1,3002 @@
+[
+  {
+    "id": 1,
+    "palabra": "cajon",
+    "pista": "guardar",
+    "categoria": "objetos"
+  },
+  {
+    "id": 2,
+    "palabra": "infiel",
+    "pista": "engaño",
+    "categoria": "personas"
+  },
+  {
+    "id": 3,
+    "palabra": "arbol",
+    "pista": "verde",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 4,
+    "palabra": "serpiente",
+    "pista": "reptil",
+    "categoria": "animales"
+  },
+  {
+    "id": 5,
+    "palabra": "instagram",
+    "pista": "red",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 6,
+    "palabra": "mueble",
+    "pista": "madera",
+    "categoria": "objetos"
+  },
+  {
+    "id": 7,
+    "palabra": "mesa",
+    "pista": "madera",
+    "categoria": "objetos"
+  },
+  {
+    "id": 8,
+    "palabra": "gato",
+    "pista": "peludo",
+    "categoria": "animales"
+  },
+  {
+    "id": 9,
+    "palabra": "playa",
+    "pista": "sol",
+    "categoria": "lugares"
+  },
+  {
+    "id": 10,
+    "palabra": "rueda",
+    "pista": "colectivo",
+    "categoria": "objetos"
+  },
+  {
+    "id": 11,
+    "palabra": "manzana",
+    "pista": "sabor",
+    "categoria": "comida"
+  },
+  {
+    "id": 12,
+    "palabra": "vaso",
+    "pista": "plástico",
+    "categoria": "objetos"
+  },
+  {
+    "id": 13,
+    "palabra": "tatuaje",
+    "pista": "tinta",
+    "categoria": "objetos"
+  },
+  {
+    "id": 14,
+    "palabra": "pared",
+    "pista": "casa",
+    "categoria": "objetos"
+  },
+  {
+    "id": 15,
+    "palabra": "celular",
+    "pista": "batería",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 16,
+    "palabra": "comida",
+    "pista": "ingredientes",
+    "categoria": "objetos"
+  },
+  {
+    "id": 17,
+    "palabra": "sonrisa",
+    "pista": "medialuna",
+    "categoria": "acciones"
+  },
+  {
+    "id": 18,
+    "palabra": "arena",
+    "pista": "verano",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 19,
+    "palabra": "casa",
+    "pista": "material",
+    "categoria": "lugares"
+  },
+  {
+    "id": 20,
+    "palabra": "pelota",
+    "pista": "plastico",
+    "categoria": "objetos"
+  },
+  {
+    "id": 21,
+    "palabra": "paraguas",
+    "pista": "clima",
+    "categoria": "objetos"
+  },
+  {
+    "id": 22,
+    "palabra": "silla",
+    "pista": "madera",
+    "categoria": "objetos"
+  },
+  {
+    "id": 23,
+    "palabra": "auto",
+    "pista": "cubiertas",
+    "categoria": "objetos"
+  },
+  {
+    "id": 24,
+    "palabra": "heladera",
+    "pista": "frio",
+    "categoria": "objetos"
+  },
+  {
+    "id": 25,
+    "palabra": "freezer",
+    "pista": "frio",
+    "categoria": "objetos"
+  },
+  {
+    "id": 26,
+    "palabra": "gaseosa",
+    "pista": "azucar",
+    "categoria": "comida"
+  },
+  {
+    "id": 27,
+    "palabra": "budin",
+    "pista": "huevo",
+    "categoria": "comida"
+  },
+  {
+    "id": 28,
+    "palabra": "hebilla",
+    "pista": "cinturon",
+    "categoria": "objetos"
+  },
+  {
+    "id": 29,
+    "palabra": "vida",
+    "pista": "existir",
+    "categoria": "acciones"
+  },
+  {
+    "id": 30,
+    "palabra": "fernet",
+    "pista": "alcohol",
+    "categoria": "comida"
+  },
+  {
+    "id": 31,
+    "palabra": "maquillaje",
+    "pista": "mujer",
+    "categoria": "objetos"
+  },
+  {
+    "id": 32,
+    "palabra": "mate",
+    "pista": "bombilla",
+    "categoria": "comida"
+  },
+  {
+    "id": 33,
+    "palabra": "piso",
+    "pista": "ceramica",
+    "categoria": "objetos"
+  },
+  {
+    "id": 34,
+    "palabra": "talco",
+    "pista": "polvo",
+    "categoria": "objetos"
+  },
+  {
+    "id": 35,
+    "palabra": "mar",
+    "pista": "agua",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 36,
+    "palabra": "cerro",
+    "pista": "topografia",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 37,
+    "palabra": "oveja",
+    "pista": "campo",
+    "categoria": "animales"
+  },
+  {
+    "id": 38,
+    "palabra": "cocina",
+    "pista": "gas",
+    "categoria": "lugares"
+  },
+  {
+    "id": 39,
+    "palabra": "kiwi",
+    "pista": "pelo",
+    "categoria": "comida"
+  },
+  {
+    "id": 40,
+    "palabra": "gratitud",
+    "pista": "gracias",
+    "categoria": "acciones"
+  },
+  {
+    "id": 41,
+    "palabra": "amargo",
+    "pista": "mate",
+    "categoria": "comida"
+  },
+  {
+    "id": 42,
+    "palabra": "coliseo",
+    "pista": "redondo",
+    "categoria": "lugares"
+  },
+  {
+    "id": 43,
+    "palabra": "brillante",
+    "pista": "glitter",
+    "categoria": "acciones"
+  },
+  {
+    "id": 44,
+    "palabra": "cielo",
+    "pista": "azul",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 45,
+    "palabra": "matematica",
+    "pista": "numeros",
+    "categoria": "objetos"
+  },
+  {
+    "id": 46,
+    "palabra": "libro",
+    "pista": "hoja",
+    "categoria": "objetos"
+  },
+  {
+    "id": 47,
+    "palabra": "pancho",
+    "pista": "mostaza",
+    "categoria": "comida"
+  },
+  {
+    "id": 48,
+    "palabra": "galletitas",
+    "pista": "merienda",
+    "categoria": "comida"
+  },
+  {
+    "id": 49,
+    "palabra": "limonero",
+    "pista": "limon",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 50,
+    "palabra": "pescar",
+    "pista": "caña",
+    "categoria": "acciones"
+  },
+  {
+    "id": 51,
+    "palabra": "gallina",
+    "pista": "huevos",
+    "categoria": "animales"
+  },
+  {
+    "id": 52,
+    "palabra": "leche",
+    "pista": "vaca",
+    "categoria": "comida"
+  },
+  {
+    "id": 53,
+    "palabra": "elevador",
+    "pista": "ascensor",
+    "categoria": "objetos"
+  },
+  {
+    "id": 54,
+    "palabra": "lupa",
+    "pista": "aumento",
+    "categoria": "objetos"
+  },
+  {
+    "id": 55,
+    "palabra": "telefono",
+    "pista": "llamada",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 56,
+    "palabra": "toalla",
+    "pista": "playa",
+    "categoria": "objetos"
+  },
+  {
+    "id": 57,
+    "palabra": "garbanzos",
+    "pista": "grano",
+    "categoria": "comida"
+  },
+  {
+    "id": 58,
+    "palabra": "milanesa",
+    "pista": "frita",
+    "categoria": "comida"
+  },
+  {
+    "id": 59,
+    "palabra": "balde",
+    "pista": "agua",
+    "categoria": "objetos"
+  },
+  {
+    "id": 60,
+    "palabra": "perro",
+    "pista": "ladrido",
+    "categoria": "animales"
+  },
+  {
+    "id": 61,
+    "palabra": "pizza",
+    "pista": "muzzarella",
+    "categoria": "comida"
+  },
+  {
+    "id": 62,
+    "palabra": "acantilado",
+    "pista": "altura",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 63,
+    "palabra": "colibri",
+    "pista": "nectar",
+    "categoria": "animales"
+  },
+  {
+    "id": 64,
+    "palabra": "maceta",
+    "pista": "planta",
+    "categoria": "objetos"
+  },
+  {
+    "id": 65,
+    "palabra": "restaurante",
+    "pista": "menu",
+    "categoria": "lugares"
+  },
+  {
+    "id": 66,
+    "palabra": "soplador",
+    "pista": "aire",
+    "categoria": "objetos"
+  },
+  {
+    "id": 67,
+    "palabra": "bateria",
+    "pista": "carga",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 68,
+    "palabra": "ventilador",
+    "pista": "aire",
+    "categoria": "objetos"
+  },
+  {
+    "id": 69,
+    "palabra": "condor",
+    "pista": "andino",
+    "categoria": "animales"
+  },
+  {
+    "id": 70,
+    "palabra": "secador",
+    "pista": "cabello",
+    "categoria": "objetos"
+  },
+  {
+    "id": 71,
+    "palabra": "avispa",
+    "pista": "aguijon",
+    "categoria": "animales"
+  },
+  {
+    "id": 72,
+    "palabra": "fotografo",
+    "pista": "lente",
+    "categoria": "personas"
+  },
+  {
+    "id": 73,
+    "palabra": "mula",
+    "pista": "carga",
+    "categoria": "animales"
+  },
+  {
+    "id": 74,
+    "palabra": "guardar",
+    "pista": "archivo",
+    "categoria": "acciones"
+  },
+  {
+    "id": 75,
+    "palabra": "arroz",
+    "pista": "grano",
+    "categoria": "comida"
+  },
+  {
+    "id": 76,
+    "palabra": "frontend",
+    "pista": "ui",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 77,
+    "palabra": "pileta",
+    "pista": "agua",
+    "categoria": "lugares"
+  },
+  {
+    "id": 78,
+    "palabra": "scanner",
+    "pista": "escaneo",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 79,
+    "palabra": "estadio",
+    "pista": "hinchada",
+    "categoria": "lugares"
+  },
+  {
+    "id": 80,
+    "palabra": "sopa",
+    "pista": "caldo",
+    "categoria": "comida"
+  },
+  {
+    "id": 81,
+    "palabra": "mantel",
+    "pista": "mesa",
+    "categoria": "objetos"
+  },
+  {
+    "id": 82,
+    "palabra": "escoba",
+    "pista": "barrer",
+    "categoria": "objetos"
+  },
+  {
+    "id": 83,
+    "palabra": "susurrar",
+    "pista": "secreto",
+    "categoria": "acciones"
+  },
+  {
+    "id": 84,
+    "palabra": "estudio",
+    "pista": "abogado",
+    "categoria": "lugares"
+  },
+  {
+    "id": 85,
+    "palabra": "playon",
+    "pista": "cemento",
+    "categoria": "lugares"
+  },
+  {
+    "id": 86,
+    "palabra": "mate",
+    "pista": "yerba",
+    "categoria": "comida"
+  },
+  {
+    "id": 87,
+    "palabra": "pintor",
+    "pista": "lienzo",
+    "categoria": "personas"
+  },
+  {
+    "id": 88,
+    "palabra": "nube",
+    "pista": "blanco",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 89,
+    "palabra": "sabanas",
+    "pista": "cama",
+    "categoria": "objetos"
+  },
+  {
+    "id": 90,
+    "palabra": "asado",
+    "pista": "parrilla",
+    "categoria": "comida"
+  },
+  {
+    "id": 91,
+    "palabra": "campo",
+    "pista": "siembra",
+    "categoria": "lugares"
+  },
+  {
+    "id": 92,
+    "palabra": "cumbre",
+    "pista": "alto",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 93,
+    "palabra": "desconectar",
+    "pista": "corte",
+    "categoria": "acciones"
+  },
+  {
+    "id": 94,
+    "palabra": "criptografia",
+    "pista": "clave",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 95,
+    "palabra": "rana",
+    "pista": "salto",
+    "categoria": "animales"
+  },
+  {
+    "id": 96,
+    "palabra": "tenedor",
+    "pista": "pincho",
+    "categoria": "objetos"
+  },
+  {
+    "id": 97,
+    "palabra": "alfajor",
+    "pista": "relleno",
+    "categoria": "comida"
+  },
+  {
+    "id": 98,
+    "palabra": "nutria",
+    "pista": "rio",
+    "categoria": "animales"
+  },
+  {
+    "id": 99,
+    "palabra": "biblioteca",
+    "pista": "silencio",
+    "categoria": "lugares"
+  },
+  {
+    "id": 100,
+    "palabra": "pez",
+    "pista": "aleta",
+    "categoria": "animales"
+  },
+  {
+    "id": 101,
+    "palabra": "gritar",
+    "pista": "voz",
+    "categoria": "acciones"
+  },
+  {
+    "id": 102,
+    "palabra": "camara",
+    "pista": "foto",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 103,
+    "palabra": "guardia",
+    "pista": "seguridad",
+    "categoria": "personas"
+  },
+  {
+    "id": 104,
+    "palabra": "isla",
+    "pista": "mar",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 105,
+    "palabra": "carpintero",
+    "pista": "madera",
+    "categoria": "personas"
+  },
+  {
+    "id": 106,
+    "palabra": "parlante",
+    "pista": "musica",
+    "categoria": "objetos"
+  },
+  {
+    "id": 107,
+    "palabra": "turron",
+    "pista": "dulce",
+    "categoria": "comida"
+  },
+  {
+    "id": 108,
+    "palabra": "mono",
+    "pista": "lazo",
+    "categoria": "objetos"
+  },
+  {
+    "id": 109,
+    "palabra": "rio",
+    "pista": "corriente",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 110,
+    "palabra": "lechuga",
+    "pista": "hoja",
+    "categoria": "comida"
+  },
+  {
+    "id": 111,
+    "palabra": "rinoceronte",
+    "pista": "cuerno",
+    "categoria": "animales"
+  },
+  {
+    "id": 112,
+    "palabra": "laptop",
+    "pista": "portatil",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 113,
+    "palabra": "tigre",
+    "pista": "rayas",
+    "categoria": "animales"
+  },
+  {
+    "id": 114,
+    "palabra": "disenador",
+    "pista": "dibujo",
+    "categoria": "personas"
+  },
+  {
+    "id": 115,
+    "palabra": "escritor",
+    "pista": "novela",
+    "categoria": "personas"
+  },
+  {
+    "id": 116,
+    "palabra": "bar",
+    "pista": "trago",
+    "categoria": "lugares"
+  },
+  {
+    "id": 117,
+    "palabra": "balanza",
+    "pista": "peso",
+    "categoria": "objetos"
+  },
+  {
+    "id": 118,
+    "palabra": "delfin",
+    "pista": "salto",
+    "categoria": "animales"
+  },
+  {
+    "id": 119,
+    "palabra": "policia",
+    "pista": "ley",
+    "categoria": "personas"
+  },
+  {
+    "id": 120,
+    "palabra": "arquitecto",
+    "pista": "planos",
+    "categoria": "personas"
+  },
+  {
+    "id": 121,
+    "palabra": "hormiga",
+    "pista": "fila",
+    "categoria": "animales"
+  },
+  {
+    "id": 122,
+    "palabra": "lobo",
+    "pista": "manada",
+    "categoria": "animales"
+  },
+  {
+    "id": 123,
+    "palabra": "percha",
+    "pista": "colgar",
+    "categoria": "objetos"
+  },
+  {
+    "id": 124,
+    "palabra": "banco",
+    "pista": "dinero",
+    "categoria": "lugares"
+  },
+  {
+    "id": 125,
+    "palabra": "globo",
+    "pista": "aire",
+    "categoria": "objetos"
+  },
+  {
+    "id": 126,
+    "palabra": "escuela",
+    "pista": "clase",
+    "categoria": "lugares"
+  },
+  {
+    "id": 127,
+    "palabra": "primavera",
+    "pista": "flores",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 128,
+    "palabra": "barbero",
+    "pista": "corte",
+    "categoria": "personas"
+  },
+  {
+    "id": 129,
+    "palabra": "preguntar",
+    "pista": "duda",
+    "categoria": "acciones"
+  },
+  {
+    "id": 130,
+    "palabra": "sobre",
+    "pista": "carta",
+    "categoria": "objetos"
+  },
+  {
+    "id": 131,
+    "palabra": "saltar",
+    "pista": "altura",
+    "categoria": "acciones"
+  },
+  {
+    "id": 132,
+    "palabra": "otono",
+    "pista": "hojas",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 133,
+    "palabra": "bosque",
+    "pista": "arboles",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 134,
+    "palabra": "lamina",
+    "pista": "papel",
+    "categoria": "objetos"
+  },
+  {
+    "id": 135,
+    "palabra": "mochila",
+    "pista": "carga",
+    "categoria": "objetos"
+  },
+  {
+    "id": 136,
+    "palabra": "dibujar",
+    "pista": "lapiz",
+    "categoria": "acciones"
+  },
+  {
+    "id": 137,
+    "palabra": "paloma",
+    "pista": "plaza",
+    "categoria": "animales"
+  },
+  {
+    "id": 138,
+    "palabra": "arete",
+    "pista": "oreja",
+    "categoria": "objetos"
+  },
+  {
+    "id": 139,
+    "palabra": "doctor",
+    "pista": "salud",
+    "categoria": "personas"
+  },
+  {
+    "id": 140,
+    "palabra": "pincel",
+    "pista": "pintura",
+    "categoria": "objetos"
+  },
+  {
+    "id": 141,
+    "palabra": "cama",
+    "pista": "sueno",
+    "categoria": "objetos"
+  },
+  {
+    "id": 142,
+    "palabra": "yogur",
+    "pista": "fermento",
+    "categoria": "comida"
+  },
+  {
+    "id": 143,
+    "palabra": "juez",
+    "pista": "veredicto",
+    "categoria": "personas"
+  },
+  {
+    "id": 144,
+    "palabra": "manejar",
+    "pista": "volante",
+    "categoria": "acciones"
+  },
+  {
+    "id": 145,
+    "palabra": "streaming",
+    "pista": "video",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 146,
+    "palabra": "confesar",
+    "pista": "verdad",
+    "categoria": "acciones"
+  },
+  {
+    "id": 147,
+    "palabra": "bicicleta",
+    "pista": "pedal",
+    "categoria": "objetos"
+  },
+  {
+    "id": 148,
+    "palabra": "buscar",
+    "pista": "pista",
+    "categoria": "acciones"
+  },
+  {
+    "id": 149,
+    "palabra": "botella",
+    "pista": "tapa",
+    "categoria": "objetos"
+  },
+  {
+    "id": 150,
+    "palabra": "ciervo",
+    "pista": "bosque",
+    "categoria": "animales"
+  },
+  {
+    "id": 151,
+    "palabra": "arrecife",
+    "pista": "mar",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 152,
+    "palabra": "llorar",
+    "pista": "triste",
+    "categoria": "acciones"
+  },
+  {
+    "id": 153,
+    "palabra": "lata",
+    "pista": "metal",
+    "categoria": "objetos"
+  },
+  {
+    "id": 154,
+    "palabra": "cementerio",
+    "pista": "tumba",
+    "categoria": "lugares"
+  },
+  {
+    "id": 155,
+    "palabra": "cafe",
+    "pista": "expreso",
+    "categoria": "lugares"
+  },
+  {
+    "id": 156,
+    "palabra": "vivir",
+    "pista": "existir",
+    "categoria": "acciones"
+  },
+  {
+    "id": 157,
+    "palabra": "cabrita",
+    "pista": "cuerno",
+    "categoria": "animales"
+  },
+  {
+    "id": 158,
+    "palabra": "ios",
+    "pista": "movil",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 159,
+    "palabra": "rompecabezas",
+    "pista": "piezas",
+    "categoria": "objetos"
+  },
+  {
+    "id": 160,
+    "palabra": "camisa",
+    "pista": "boton",
+    "categoria": "objetos"
+  },
+  {
+    "id": 161,
+    "palabra": "smartwatch",
+    "pista": "reloj",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 162,
+    "palabra": "pintar",
+    "pista": "color",
+    "categoria": "acciones"
+  },
+  {
+    "id": 163,
+    "palabra": "codigoqr",
+    "pista": "escaneo",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 164,
+    "palabra": "hamburguesa",
+    "pista": "pan",
+    "categoria": "comida"
+  },
+  {
+    "id": 165,
+    "palabra": "cuchillo",
+    "pista": "filo",
+    "categoria": "objetos"
+  },
+  {
+    "id": 166,
+    "palabra": "ola",
+    "pista": "espuma",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 167,
+    "palabra": "quimico",
+    "pista": "reactivo",
+    "categoria": "personas"
+  },
+  {
+    "id": 168,
+    "palabra": "oler",
+    "pista": "nariz",
+    "categoria": "acciones"
+  },
+  {
+    "id": 169,
+    "palabra": "robot",
+    "pista": "automa",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 170,
+    "palabra": "caminar",
+    "pista": "paso",
+    "categoria": "acciones"
+  },
+  {
+    "id": 171,
+    "palabra": "cuartel",
+    "pista": "bomberos",
+    "categoria": "lugares"
+  },
+  {
+    "id": 172,
+    "palabra": "tocar",
+    "pista": "mano",
+    "categoria": "acciones"
+  },
+  {
+    "id": 173,
+    "palabra": "panadero",
+    "pista": "masa",
+    "categoria": "personas"
+  },
+  {
+    "id": 174,
+    "palabra": "esquina",
+    "pista": "cruce",
+    "categoria": "lugares"
+  },
+  {
+    "id": 175,
+    "palabra": "porotos",
+    "pista": "grano",
+    "categoria": "comida"
+  },
+  {
+    "id": 176,
+    "palabra": "backend",
+    "pista": "server",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 177,
+    "palabra": "buho",
+    "pista": "noche",
+    "categoria": "animales"
+  },
+  {
+    "id": 178,
+    "palabra": "brillar",
+    "pista": "luz",
+    "categoria": "acciones"
+  },
+  {
+    "id": 179,
+    "palabra": "sandalia",
+    "pista": "verano",
+    "categoria": "objetos"
+  },
+  {
+    "id": 180,
+    "palabra": "verduleria",
+    "pista": "fruta",
+    "categoria": "lugares"
+  },
+  {
+    "id": 181,
+    "palabra": "sal",
+    "pista": "sodio",
+    "categoria": "comida"
+  },
+  {
+    "id": 182,
+    "palabra": "chofer",
+    "pista": "volante",
+    "categoria": "personas"
+  },
+  {
+    "id": 183,
+    "palabra": "panaderia",
+    "pista": "harina",
+    "categoria": "lugares"
+  },
+  {
+    "id": 184,
+    "palabra": "vendedor",
+    "pista": "oferta",
+    "categoria": "personas"
+  },
+  {
+    "id": 185,
+    "palabra": "servidor",
+    "pista": "hosting",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 186,
+    "palabra": "florero",
+    "pista": "flores",
+    "categoria": "objetos"
+  },
+  {
+    "id": 187,
+    "palabra": "cuervo",
+    "pista": "negro",
+    "categoria": "animales"
+  },
+  {
+    "id": 188,
+    "palabra": "ganar",
+    "pista": "triunfo",
+    "categoria": "acciones"
+  },
+  {
+    "id": 189,
+    "palabra": "olvidar",
+    "pista": "vacio",
+    "categoria": "acciones"
+  },
+  {
+    "id": 190,
+    "palabra": "estrella",
+    "pista": "cielo",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 191,
+    "palabra": "carpeta",
+    "pista": "archivos",
+    "categoria": "objetos"
+  },
+  {
+    "id": 192,
+    "palabra": "valija",
+    "pista": "equipaje",
+    "categoria": "objetos"
+  },
+  {
+    "id": 193,
+    "palabra": "sonar",
+    "pista": "idea",
+    "categoria": "acciones"
+  },
+  {
+    "id": 194,
+    "palabra": "sendero",
+    "pista": "camino",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 195,
+    "palabra": "fisico",
+    "pista": "energia",
+    "categoria": "personas"
+  },
+  {
+    "id": 196,
+    "palabra": "plato",
+    "pista": "comida",
+    "categoria": "objetos"
+  },
+  {
+    "id": 197,
+    "palabra": "repositor",
+    "pista": "gondola",
+    "categoria": "personas"
+  },
+  {
+    "id": 198,
+    "palabra": "hotel",
+    "pista": "reserva",
+    "categoria": "lugares"
+  },
+  {
+    "id": 199,
+    "palabra": "granizo",
+    "pista": "piedra",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 200,
+    "palabra": "granadero",
+    "pista": "caballo",
+    "categoria": "personas"
+  },
+  {
+    "id": 201,
+    "palabra": "grapa",
+    "pista": "metal",
+    "categoria": "objetos"
+  },
+  {
+    "id": 202,
+    "palabra": "campera",
+    "pista": "frio",
+    "categoria": "objetos"
+  },
+  {
+    "id": 203,
+    "palabra": "roca",
+    "pista": "dura",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 204,
+    "palabra": "montanita",
+    "pista": "cerro",
+    "categoria": "lugares"
+  },
+  {
+    "id": 205,
+    "palabra": "leon",
+    "pista": "melena",
+    "categoria": "animales"
+  },
+  {
+    "id": 206,
+    "palabra": "enfermero",
+    "pista": "cura",
+    "categoria": "personas"
+  },
+  {
+    "id": 207,
+    "palabra": "peine",
+    "pista": "dientes",
+    "categoria": "objetos"
+  },
+  {
+    "id": 208,
+    "palabra": "carnicero",
+    "pista": "carne",
+    "categoria": "personas"
+  },
+  {
+    "id": 209,
+    "palabra": "cascada",
+    "pista": "caida",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 210,
+    "palabra": "servilleta",
+    "pista": "limpieza",
+    "categoria": "objetos"
+  },
+  {
+    "id": 211,
+    "palabra": "alfombra",
+    "pista": "piso",
+    "categoria": "objetos"
+  },
+  {
+    "id": 212,
+    "palabra": "invierno",
+    "pista": "frio",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 213,
+    "palabra": "peluquero",
+    "pista": "tijera",
+    "categoria": "personas"
+  },
+  {
+    "id": 214,
+    "palabra": "recordar",
+    "pista": "memoria",
+    "categoria": "acciones"
+  },
+  {
+    "id": 215,
+    "palabra": "gnocchi",
+    "pista": "papa",
+    "categoria": "comida"
+  },
+  {
+    "id": 216,
+    "palabra": "pescado",
+    "pista": "mar",
+    "categoria": "comida"
+  },
+  {
+    "id": 217,
+    "palabra": "costurera",
+    "pista": "hilo",
+    "categoria": "personas"
+  },
+  {
+    "id": 218,
+    "palabra": "billetera",
+    "pista": "dinero",
+    "categoria": "objetos"
+  },
+  {
+    "id": 219,
+    "palabra": "museo",
+    "pista": "arte",
+    "categoria": "lugares"
+  },
+  {
+    "id": 220,
+    "palabra": "duna",
+    "pista": "arena",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 221,
+    "palabra": "sello",
+    "pista": "correo",
+    "categoria": "objetos"
+  },
+  {
+    "id": 222,
+    "palabra": "bufanda",
+    "pista": "cuello",
+    "categoria": "objetos"
+  },
+  {
+    "id": 223,
+    "palabra": "aplicacion",
+    "pista": "app",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 224,
+    "palabra": "zorrogris",
+    "pista": "astuto",
+    "categoria": "animales"
+  },
+  {
+    "id": 225,
+    "palabra": "algoritmo",
+    "pista": "logica",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 226,
+    "palabra": "ajo",
+    "pista": "diente",
+    "categoria": "comida"
+  },
+  {
+    "id": 227,
+    "palabra": "router",
+    "pista": "wifi",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 228,
+    "palabra": "destornillador",
+    "pista": "tornillo",
+    "categoria": "objetos"
+  },
+  {
+    "id": 229,
+    "palabra": "modista",
+    "pista": "prenda",
+    "categoria": "personas"
+  },
+  {
+    "id": 230,
+    "palabra": "tornado",
+    "pista": "giro",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 231,
+    "palabra": "patin",
+    "pista": "ruedas",
+    "categoria": "objetos"
+  },
+  {
+    "id": 232,
+    "palabra": "puerto",
+    "pista": "barco",
+    "categoria": "lugares"
+  },
+  {
+    "id": 233,
+    "palabra": "ciudad",
+    "pista": "urbano",
+    "categoria": "lugares"
+  },
+  {
+    "id": 234,
+    "palabra": "ramen",
+    "pista": "caldo",
+    "categoria": "comida"
+  },
+  {
+    "id": 235,
+    "palabra": "aeropuerto",
+    "pista": "vuelo",
+    "categoria": "lugares"
+  },
+  {
+    "id": 236,
+    "palabra": "cancha",
+    "pista": "partido",
+    "categoria": "lugares"
+  },
+  {
+    "id": 237,
+    "palabra": "perfume",
+    "pista": "aroma",
+    "categoria": "objetos"
+  },
+  {
+    "id": 238,
+    "palabra": "universidad",
+    "pista": "campus",
+    "categoria": "lugares"
+  },
+  {
+    "id": 239,
+    "palabra": "carrito",
+    "pista": "ruedas",
+    "categoria": "objetos"
+  },
+  {
+    "id": 240,
+    "palabra": "lluvia",
+    "pista": "gotas",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 241,
+    "palabra": "sushi",
+    "pista": "arroz",
+    "categoria": "comida"
+  },
+  {
+    "id": 242,
+    "palabra": "toallon",
+    "pista": "secar",
+    "categoria": "objetos"
+  },
+  {
+    "id": 243,
+    "palabra": "sonreir",
+    "pista": "alegria",
+    "categoria": "acciones"
+  },
+  {
+    "id": 244,
+    "palabra": "periodista",
+    "pista": "noticia",
+    "categoria": "personas"
+  },
+  {
+    "id": 245,
+    "palabra": "investigar",
+    "pista": "prueba",
+    "categoria": "acciones"
+  },
+  {
+    "id": 246,
+    "palabra": "psicologo",
+    "pista": "mente",
+    "categoria": "personas"
+  },
+  {
+    "id": 247,
+    "palabra": "carpincho",
+    "pista": "rio",
+    "categoria": "animales"
+  },
+  {
+    "id": 248,
+    "palabra": "fosforo",
+    "pista": "fuego",
+    "categoria": "objetos"
+  },
+  {
+    "id": 249,
+    "palabra": "correo",
+    "pista": "email",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 250,
+    "palabra": "chef",
+    "pista": "cocina",
+    "categoria": "personas"
+  },
+  {
+    "id": 251,
+    "palabra": "pueblo",
+    "pista": "plaza",
+    "categoria": "lugares"
+  },
+  {
+    "id": 252,
+    "palabra": "trueno",
+    "pista": "ruido",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 253,
+    "palabra": "abogado",
+    "pista": "juicio",
+    "categoria": "personas"
+  },
+  {
+    "id": 254,
+    "palabra": "girasol",
+    "pista": "amarillo",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 255,
+    "palabra": "cientifico",
+    "pista": "experimento",
+    "categoria": "personas"
+  },
+  {
+    "id": 256,
+    "palabra": "llave",
+    "pista": "cerradura",
+    "categoria": "objetos"
+  },
+  {
+    "id": 257,
+    "palabra": "taza",
+    "pista": "cafe",
+    "categoria": "objetos"
+  },
+  {
+    "id": 258,
+    "palabra": "granja",
+    "pista": "animales",
+    "categoria": "lugares"
+  },
+  {
+    "id": 259,
+    "palabra": "fideos",
+    "pista": "pasta",
+    "categoria": "comida"
+  },
+  {
+    "id": 260,
+    "palabra": "pantalla",
+    "pista": "pixel",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 261,
+    "palabra": "trapo",
+    "pista": "limpiar",
+    "categoria": "objetos"
+  },
+  {
+    "id": 262,
+    "palabra": "marea",
+    "pista": "sube",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 263,
+    "palabra": "pollo",
+    "pista": "pechuga",
+    "categoria": "comida"
+  },
+  {
+    "id": 264,
+    "palabra": "ladron",
+    "pista": "robo",
+    "categoria": "personas"
+  },
+  {
+    "id": 265,
+    "palabra": "mouse",
+    "pista": "cursor",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 266,
+    "palabra": "escarabajo",
+    "pista": "caparazon",
+    "categoria": "animales"
+  },
+  {
+    "id": 267,
+    "palabra": "videojuego",
+    "pista": "nivel",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 268,
+    "palabra": "sandia",
+    "pista": "jugosa",
+    "categoria": "comida"
+  },
+  {
+    "id": 269,
+    "palabra": "taller",
+    "pista": "mecanico",
+    "categoria": "lugares"
+  },
+  {
+    "id": 270,
+    "palabra": "ruta",
+    "pista": "viaje",
+    "categoria": "lugares"
+  },
+  {
+    "id": 271,
+    "palabra": "cartera",
+    "pista": "billetera",
+    "categoria": "objetos"
+  },
+  {
+    "id": 272,
+    "palabra": "iman",
+    "pista": "metal",
+    "categoria": "objetos"
+  },
+  {
+    "id": 273,
+    "palabra": "cebolla",
+    "pista": "lagrima",
+    "categoria": "comida"
+  },
+  {
+    "id": 274,
+    "palabra": "cuadro",
+    "pista": "pared",
+    "categoria": "objetos"
+  },
+  {
+    "id": 275,
+    "palabra": "broche",
+    "pista": "sujetar",
+    "categoria": "objetos"
+  },
+  {
+    "id": 276,
+    "palabra": "pradera",
+    "pista": "pasto",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 277,
+    "palabra": "terminal",
+    "pista": "colectivo",
+    "categoria": "lugares"
+  },
+  {
+    "id": 278,
+    "palabra": "bailar",
+    "pista": "ritmo",
+    "categoria": "acciones"
+  },
+  {
+    "id": 279,
+    "palabra": "tortilla",
+    "pista": "huevo",
+    "categoria": "comida"
+  },
+  {
+    "id": 280,
+    "palabra": "supermercado",
+    "pista": "compras",
+    "categoria": "lugares"
+  },
+  {
+    "id": 281,
+    "palabra": "sol",
+    "pista": "calor",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 282,
+    "palabra": "naranja",
+    "pista": "citrico",
+    "categoria": "comida"
+  },
+  {
+    "id": 283,
+    "palabra": "hospital",
+    "pista": "medico",
+    "categoria": "lugares"
+  },
+  {
+    "id": 284,
+    "palabra": "cerveza",
+    "pista": "lupulo",
+    "categoria": "comida"
+  },
+  {
+    "id": 285,
+    "palabra": "iceberg",
+    "pista": "hielo",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 286,
+    "palabra": "comer",
+    "pista": "bocado",
+    "categoria": "acciones"
+  },
+  {
+    "id": 287,
+    "palabra": "foca",
+    "pista": "hielo",
+    "categoria": "animales"
+  },
+  {
+    "id": 288,
+    "palabra": "puente",
+    "pista": "rio",
+    "categoria": "lugares"
+  },
+  {
+    "id": 289,
+    "palabra": "beber",
+    "pista": "trago",
+    "categoria": "acciones"
+  },
+  {
+    "id": 290,
+    "palabra": "internet",
+    "pista": "red",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 291,
+    "palabra": "zorro",
+    "pista": "astuto",
+    "categoria": "animales"
+  },
+  {
+    "id": 292,
+    "palabra": "helado",
+    "pista": "frio",
+    "categoria": "comida"
+  },
+  {
+    "id": 293,
+    "palabra": "bombero",
+    "pista": "fuego",
+    "categoria": "personas"
+  },
+  {
+    "id": 294,
+    "palabra": "ayudar",
+    "pista": "apoyo",
+    "categoria": "acciones"
+  },
+  {
+    "id": 295,
+    "palabra": "choripan",
+    "pista": "parrilla",
+    "categoria": "comida"
+  },
+  {
+    "id": 296,
+    "palabra": "chocolate",
+    "pista": "cacao",
+    "categoria": "comida"
+  },
+  {
+    "id": 297,
+    "palabra": "huevo",
+    "pista": "yema",
+    "categoria": "comida"
+  },
+  {
+    "id": 298,
+    "palabra": "paciente",
+    "pista": "turno",
+    "categoria": "personas"
+  },
+  {
+    "id": 299,
+    "palabra": "costa",
+    "pista": "orilla",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 300,
+    "palabra": "parque",
+    "pista": "cesped",
+    "categoria": "lugares"
+  },
+  {
+    "id": 301,
+    "palabra": "bluetooth",
+    "pista": "conexion",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 302,
+    "palabra": "piedra",
+    "pista": "dura",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 303,
+    "palabra": "aplaudir",
+    "pista": "palmas",
+    "categoria": "acciones"
+  },
+  {
+    "id": 304,
+    "palabra": "estilista",
+    "pista": "moda",
+    "categoria": "personas"
+  },
+  {
+    "id": 305,
+    "palabra": "cine",
+    "pista": "pelicula",
+    "categoria": "lugares"
+  },
+  {
+    "id": 306,
+    "palabra": "tortuga",
+    "pista": "lenta",
+    "categoria": "animales"
+  },
+  {
+    "id": 307,
+    "palabra": "papas",
+    "pista": "fritas",
+    "categoria": "comida"
+  },
+  {
+    "id": 308,
+    "palabra": "coral",
+    "pista": "arrecife",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 309,
+    "palabra": "altavoz",
+    "pista": "sonido",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 310,
+    "palabra": "nadar",
+    "pista": "agua",
+    "categoria": "acciones"
+  },
+  {
+    "id": 311,
+    "palabra": "barrio",
+    "pista": "vecinos",
+    "categoria": "lugares"
+  },
+  {
+    "id": 312,
+    "palabra": "microfono",
+    "pista": "audio",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 313,
+    "palabra": "lector",
+    "pista": "paginas",
+    "categoria": "personas"
+  },
+  {
+    "id": 314,
+    "palabra": "atardecer",
+    "pista": "naranja",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 315,
+    "palabra": "plomero",
+    "pista": "cano",
+    "categoria": "personas"
+  },
+  {
+    "id": 316,
+    "palabra": "viajar",
+    "pista": "ruta",
+    "categoria": "acciones"
+  },
+  {
+    "id": 317,
+    "palabra": "medusa",
+    "pista": "gelatina",
+    "categoria": "animales"
+  },
+  {
+    "id": 318,
+    "palabra": "lasagna",
+    "pista": "capas",
+    "categoria": "comida"
+  },
+  {
+    "id": 319,
+    "palabra": "tecnologia",
+    "pista": "futuro",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 320,
+    "palabra": "cocinar",
+    "pista": "horno",
+    "categoria": "acciones"
+  },
+  {
+    "id": 321,
+    "palabra": "jirafa",
+    "pista": "cuello",
+    "categoria": "animales"
+  },
+  {
+    "id": 322,
+    "palabra": "cangrejo",
+    "pista": "pinza",
+    "categoria": "animales"
+  },
+  {
+    "id": 323,
+    "palabra": "conectar",
+    "pista": "red",
+    "categoria": "acciones"
+  },
+  {
+    "id": 324,
+    "palabra": "viento",
+    "pista": "brisa",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 325,
+    "palabra": "amanecer",
+    "pista": "rojo",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 326,
+    "palabra": "limonada",
+    "pista": "limon",
+    "categoria": "comida"
+  },
+  {
+    "id": 327,
+    "palabra": "escuchar",
+    "pista": "oido",
+    "categoria": "acciones"
+  },
+  {
+    "id": 328,
+    "palabra": "editor",
+    "pista": "texto",
+    "categoria": "personas"
+  },
+  {
+    "id": 329,
+    "palabra": "besar",
+    "pista": "labios",
+    "categoria": "acciones"
+  },
+  {
+    "id": 330,
+    "palabra": "framework",
+    "pista": "libreria",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 331,
+    "palabra": "cantante",
+    "pista": "voz",
+    "categoria": "personas"
+  },
+  {
+    "id": 332,
+    "palabra": "azucar",
+    "pista": "dulzor",
+    "categoria": "comida"
+  },
+  {
+    "id": 333,
+    "palabra": "joystick",
+    "pista": "control",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 334,
+    "palabra": "glaciar",
+    "pista": "hielo",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 335,
+    "palabra": "perder",
+    "pista": "derrota",
+    "categoria": "acciones"
+  },
+  {
+    "id": 336,
+    "palabra": "luna",
+    "pista": "noche",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 337,
+    "palabra": "galaxia",
+    "pista": "estrellas",
+    "categoria": "lugares"
+  },
+  {
+    "id": 338,
+    "palabra": "responder",
+    "pista": "solucion",
+    "categoria": "acciones"
+  },
+  {
+    "id": 339,
+    "palabra": "api",
+    "pista": "endpoint",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 340,
+    "palabra": "ensalada",
+    "pista": "verde",
+    "categoria": "comida"
+  },
+  {
+    "id": 341,
+    "palabra": "cueva",
+    "pista": "oscuro",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 342,
+    "palabra": "reir",
+    "pista": "feliz",
+    "categoria": "acciones"
+  },
+  {
+    "id": 343,
+    "palabra": "tropezar",
+    "pista": "caida",
+    "categoria": "acciones"
+  },
+  {
+    "id": 344,
+    "palabra": "empanada",
+    "pista": "relleno",
+    "categoria": "comida"
+  },
+  {
+    "id": 345,
+    "palabra": "canario",
+    "pista": "canto",
+    "categoria": "animales"
+  },
+  {
+    "id": 346,
+    "palabra": "arepa",
+    "pista": "maiz",
+    "categoria": "comida"
+  },
+  {
+    "id": 347,
+    "palabra": "abeja",
+    "pista": "miel",
+    "categoria": "animales"
+  },
+  {
+    "id": 348,
+    "palabra": "lagarto",
+    "pista": "reptil",
+    "categoria": "animales"
+  },
+  {
+    "id": 349,
+    "palabra": "raiz",
+    "pista": "suelo",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 350,
+    "palabra": "dron",
+    "pista": "vuelo",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 351,
+    "palabra": "compilar",
+    "pista": "build",
+    "categoria": "acciones"
+  },
+  {
+    "id": 352,
+    "palabra": "factura",
+    "pista": "dulce",
+    "categoria": "comida"
+  },
+  {
+    "id": 353,
+    "palabra": "ganadero",
+    "pista": "vacas",
+    "categoria": "personas"
+  },
+  {
+    "id": 354,
+    "palabra": "estacion",
+    "pista": "tren",
+    "categoria": "lugares"
+  },
+  {
+    "id": 355,
+    "palabra": "poeta",
+    "pista": "verso",
+    "categoria": "personas"
+  },
+  {
+    "id": 356,
+    "palabra": "piloto",
+    "pista": "vuelo",
+    "categoria": "personas"
+  },
+  {
+    "id": 357,
+    "palabra": "sentir",
+    "pista": "piel",
+    "categoria": "acciones"
+  },
+  {
+    "id": 358,
+    "palabra": "cebra",
+    "pista": "rayas",
+    "categoria": "animales"
+  },
+  {
+    "id": 359,
+    "palabra": "agricultor",
+    "pista": "siembra",
+    "categoria": "personas"
+  },
+  {
+    "id": 360,
+    "palabra": "cocinero",
+    "pista": "sarten",
+    "categoria": "personas"
+  },
+  {
+    "id": 361,
+    "palabra": "verano",
+    "pista": "calor",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 362,
+    "palabra": "cajero",
+    "pista": "caja",
+    "categoria": "personas"
+  },
+  {
+    "id": 363,
+    "palabra": "impresion",
+    "pista": "tinta",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 364,
+    "palabra": "guanaco",
+    "pista": "patagonia",
+    "categoria": "animales"
+  },
+  {
+    "id": 365,
+    "palabra": "tunel",
+    "pista": "paso",
+    "categoria": "lugares"
+  },
+  {
+    "id": 366,
+    "palabra": "github",
+    "pista": "repositorio",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 367,
+    "palabra": "electricista",
+    "pista": "cable",
+    "categoria": "personas"
+  },
+  {
+    "id": 368,
+    "palabra": "pimienta",
+    "pista": "picor",
+    "categoria": "comida"
+  },
+  {
+    "id": 369,
+    "palabra": "medialuna",
+    "pista": "manteca",
+    "categoria": "comida"
+  },
+  {
+    "id": 370,
+    "palabra": "agua",
+    "pista": "hidratacion",
+    "categoria": "comida"
+  },
+  {
+    "id": 371,
+    "palabra": "maestro",
+    "pista": "aula",
+    "categoria": "personas"
+  },
+  {
+    "id": 372,
+    "palabra": "nieve",
+    "pista": "blanco",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 373,
+    "palabra": "cantar",
+    "pista": "voz",
+    "categoria": "acciones"
+  },
+  {
+    "id": 374,
+    "palabra": "ingeniero",
+    "pista": "calculo",
+    "categoria": "personas"
+  },
+  {
+    "id": 375,
+    "palabra": "empujar",
+    "pista": "fuerza",
+    "categoria": "acciones"
+  },
+  {
+    "id": 376,
+    "palabra": "hoja",
+    "pista": "verde",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 377,
+    "palabra": "medico",
+    "pista": "salud",
+    "categoria": "personas"
+  },
+  {
+    "id": 378,
+    "palabra": "capitan",
+    "pista": "barco",
+    "categoria": "personas"
+  },
+  {
+    "id": 379,
+    "palabra": "windows",
+    "pista": "sistema",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 380,
+    "palabra": "jabali",
+    "pista": "colmillo",
+    "categoria": "animales"
+  },
+  {
+    "id": 381,
+    "palabra": "basedatos",
+    "pista": "sql",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 382,
+    "palabra": "actor",
+    "pista": "escena",
+    "categoria": "personas"
+  },
+  {
+    "id": 383,
+    "palabra": "descargar",
+    "pista": "archivo",
+    "categoria": "acciones"
+  },
+  {
+    "id": 384,
+    "palabra": "taco",
+    "pista": "mexico",
+    "categoria": "comida"
+  },
+  {
+    "id": 385,
+    "palabra": "relampago",
+    "pista": "destello",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 386,
+    "palabra": "vaca",
+    "pista": "leche",
+    "categoria": "animales"
+  },
+  {
+    "id": 387,
+    "palabra": "pure",
+    "pista": "papa",
+    "categoria": "comida"
+  },
+  {
+    "id": 388,
+    "palabra": "amigo",
+    "pista": "confianza",
+    "categoria": "personas"
+  },
+  {
+    "id": 389,
+    "palabra": "gimnasio",
+    "pista": "pesas",
+    "categoria": "lugares"
+  },
+  {
+    "id": 390,
+    "palabra": "programador",
+    "pista": "codigo",
+    "categoria": "personas"
+  },
+  {
+    "id": 391,
+    "palabra": "cargador",
+    "pista": "energia",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 392,
+    "palabra": "cargar",
+    "pista": "datos",
+    "categoria": "acciones"
+  },
+  {
+    "id": 393,
+    "palabra": "oficina",
+    "pista": "trabajo",
+    "categoria": "lugares"
+  },
+  {
+    "id": 394,
+    "palabra": "gaviota",
+    "pista": "mar",
+    "categoria": "animales"
+  },
+  {
+    "id": 395,
+    "palabra": "caballo",
+    "pista": "galope",
+    "categoria": "animales"
+  },
+  {
+    "id": 396,
+    "palabra": "cabra",
+    "pista": "cuernos",
+    "categoria": "animales"
+  },
+  {
+    "id": 397,
+    "palabra": "campamento",
+    "pista": "carpa",
+    "categoria": "lugares"
+  },
+  {
+    "id": 398,
+    "palabra": "satellite",
+    "pista": "orbita",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 399,
+    "palabra": "pescador",
+    "pista": "red",
+    "categoria": "personas"
+  },
+  {
+    "id": 400,
+    "palabra": "password",
+    "pista": "clave",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 401,
+    "palabra": "biologo",
+    "pista": "celula",
+    "categoria": "personas"
+  },
+  {
+    "id": 402,
+    "palabra": "teatro",
+    "pista": "escena",
+    "categoria": "lugares"
+  },
+  {
+    "id": 403,
+    "palabra": "calamar",
+    "pista": "tinta",
+    "categoria": "animales"
+  },
+  {
+    "id": 404,
+    "palabra": "miel",
+    "pista": "abeja",
+    "categoria": "comida"
+  },
+  {
+    "id": 405,
+    "palabra": "impresora",
+    "pista": "papel",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 406,
+    "palabra": "lentejas",
+    "pista": "grano",
+    "categoria": "comida"
+  },
+  {
+    "id": 407,
+    "palabra": "vecino",
+    "pista": "barrio",
+    "categoria": "personas"
+  },
+  {
+    "id": 408,
+    "palabra": "rocio",
+    "pista": "gota",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 409,
+    "palabra": "podcast",
+    "pista": "audio",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 410,
+    "palabra": "oregano",
+    "pista": "aroma",
+    "categoria": "comida"
+  },
+  {
+    "id": 411,
+    "palabra": "jugar",
+    "pista": "ronda",
+    "categoria": "acciones"
+  },
+  {
+    "id": 412,
+    "palabra": "plaza",
+    "pista": "banco",
+    "categoria": "lugares"
+  },
+  {
+    "id": 413,
+    "palabra": "iglesia",
+    "pista": "misa",
+    "categoria": "lugares"
+  },
+  {
+    "id": 414,
+    "palabra": "montana",
+    "pista": "altura",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 415,
+    "palabra": "soldado",
+    "pista": "ejercito",
+    "categoria": "personas"
+  },
+  {
+    "id": 416,
+    "palabra": "volar",
+    "pista": "cielo",
+    "categoria": "acciones"
+  },
+  {
+    "id": 417,
+    "palabra": "computadora",
+    "pista": "pc",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 418,
+    "palabra": "correr",
+    "pista": "velocidad",
+    "categoria": "acciones"
+  },
+  {
+    "id": 419,
+    "palabra": "pantano",
+    "pista": "barro",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 420,
+    "palabra": "decidir",
+    "pista": "eleccion",
+    "categoria": "acciones"
+  },
+  {
+    "id": 421,
+    "palabra": "ballena",
+    "pista": "gigante",
+    "categoria": "animales"
+  },
+  {
+    "id": 422,
+    "palabra": "construir",
+    "pista": "obra",
+    "categoria": "acciones"
+  },
+  {
+    "id": 423,
+    "palabra": "uvas",
+    "pista": "racimo",
+    "categoria": "comida"
+  },
+  {
+    "id": 424,
+    "palabra": "leer",
+    "pista": "libro",
+    "categoria": "acciones"
+  },
+  {
+    "id": 425,
+    "palabra": "muelle",
+    "pista": "barco",
+    "categoria": "lugares"
+  },
+  {
+    "id": 426,
+    "palabra": "avenida",
+    "pista": "calle",
+    "categoria": "lugares"
+  },
+  {
+    "id": 427,
+    "palabra": "confiar",
+    "pista": "fe",
+    "categoria": "acciones"
+  },
+  {
+    "id": 428,
+    "palabra": "pinguino",
+    "pista": "frio",
+    "categoria": "animales"
+  },
+  {
+    "id": 429,
+    "palabra": "torta",
+    "pista": "dulce",
+    "categoria": "comida"
+  },
+  {
+    "id": 430,
+    "palabra": "abrazar",
+    "pista": "carino",
+    "categoria": "acciones"
+  },
+  {
+    "id": 431,
+    "palabra": "usb",
+    "pista": "puerto",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 432,
+    "palabra": "abrir",
+    "pista": "puerta",
+    "categoria": "acciones"
+  },
+  {
+    "id": 433,
+    "palabra": "orca",
+    "pista": "mar",
+    "categoria": "animales"
+  },
+  {
+    "id": 434,
+    "palabra": "tablet",
+    "pista": "pantalla",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 435,
+    "palabra": "esconder",
+    "pista": "secreto",
+    "categoria": "acciones"
+  },
+  {
+    "id": 436,
+    "palabra": "tomate",
+    "pista": "rojo",
+    "categoria": "comida"
+  },
+  {
+    "id": 437,
+    "palabra": "mermelada",
+    "pista": "fruta",
+    "categoria": "comida"
+  },
+  {
+    "id": 438,
+    "palabra": "matematico",
+    "pista": "numeros",
+    "categoria": "personas"
+  },
+  {
+    "id": 439,
+    "palabra": "consultorio",
+    "pista": "turno",
+    "categoria": "lugares"
+  },
+  {
+    "id": 440,
+    "palabra": "continente",
+    "pista": "tierra",
+    "categoria": "lugares"
+  },
+  {
+    "id": 441,
+    "palabra": "arana",
+    "pista": "telarana",
+    "categoria": "animales"
+  },
+  {
+    "id": 442,
+    "palabra": "pan",
+    "pista": "harina",
+    "categoria": "comida"
+  },
+  {
+    "id": 443,
+    "palabra": "mosquito",
+    "pista": "picadura",
+    "categoria": "animales"
+  },
+  {
+    "id": 444,
+    "palabra": "huracan",
+    "pista": "viento",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 445,
+    "palabra": "pato",
+    "pista": "laguna",
+    "categoria": "animales"
+  },
+  {
+    "id": 446,
+    "palabra": "aguila",
+    "pista": "vuelo",
+    "categoria": "animales"
+  },
+  {
+    "id": 447,
+    "palabra": "brisa",
+    "pista": "viento",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 448,
+    "palabra": "mentir",
+    "pista": "engano",
+    "categoria": "acciones"
+  },
+  {
+    "id": 449,
+    "palabra": "manteca",
+    "pista": "crema",
+    "categoria": "comida"
+  },
+  {
+    "id": 450,
+    "palabra": "valle",
+    "pista": "bajo",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 451,
+    "palabra": "musico",
+    "pista": "ritmo",
+    "categoria": "personas"
+  },
+  {
+    "id": 452,
+    "palabra": "provincia",
+    "pista": "mapa",
+    "categoria": "lugares"
+  },
+  {
+    "id": 453,
+    "palabra": "perejil",
+    "pista": "verde",
+    "categoria": "comida"
+  },
+  {
+    "id": 454,
+    "palabra": "tormenta",
+    "pista": "trueno",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 455,
+    "palabra": "enemigo",
+    "pista": "rival",
+    "categoria": "personas"
+  },
+  {
+    "id": 456,
+    "palabra": "profesor",
+    "pista": "clase",
+    "categoria": "personas"
+  },
+  {
+    "id": 457,
+    "palabra": "arreglar",
+    "pista": "reparar",
+    "categoria": "acciones"
+  },
+  {
+    "id": 458,
+    "palabra": "dentista",
+    "pista": "muela",
+    "categoria": "personas"
+  },
+  {
+    "id": 459,
+    "palabra": "loro",
+    "pista": "habla",
+    "categoria": "animales"
+  },
+  {
+    "id": 460,
+    "palabra": "planeta",
+    "pista": "orbita",
+    "categoria": "lugares"
+  },
+  {
+    "id": 461,
+    "palabra": "carniceria",
+    "pista": "corte",
+    "categoria": "lugares"
+  },
+  {
+    "id": 462,
+    "palabra": "consola",
+    "pista": "juego",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 463,
+    "palabra": "codigo",
+    "pista": "programa",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 464,
+    "palabra": "navegador",
+    "pista": "web",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 465,
+    "palabra": "sensor",
+    "pista": "medicion",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 466,
+    "palabra": "fabrica",
+    "pista": "produccion",
+    "categoria": "lugares"
+  },
+  {
+    "id": 467,
+    "palabra": "rosa",
+    "pista": "espina",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 468,
+    "palabra": "pulpo",
+    "pista": "tentaculo",
+    "categoria": "animales"
+  },
+  {
+    "id": 469,
+    "palabra": "romper",
+    "pista": "quebrar",
+    "categoria": "acciones"
+  },
+  {
+    "id": 470,
+    "palabra": "lago",
+    "pista": "orilla",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 471,
+    "palabra": "cirujano",
+    "pista": "bisturi",
+    "categoria": "personas"
+  },
+  {
+    "id": 472,
+    "palabra": "estancia",
+    "pista": "rural",
+    "categoria": "lugares"
+  },
+  {
+    "id": 473,
+    "palabra": "banana",
+    "pista": "amarillo",
+    "categoria": "comida"
+  },
+  {
+    "id": 474,
+    "palabra": "dormir",
+    "pista": "sueno",
+    "categoria": "acciones"
+  },
+  {
+    "id": 475,
+    "palabra": "bahia",
+    "pista": "costa",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 476,
+    "palabra": "cerdo",
+    "pista": "granja",
+    "categoria": "animales"
+  },
+  {
+    "id": 477,
+    "palabra": "escribir",
+    "pista": "texto",
+    "categoria": "acciones"
+  },
+  {
+    "id": 478,
+    "palabra": "burro",
+    "pista": "carga",
+    "categoria": "animales"
+  },
+  {
+    "id": 479,
+    "palabra": "volcan",
+    "pista": "lava",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 480,
+    "palabra": "flor",
+    "pista": "petalo",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 481,
+    "palabra": "marinero",
+    "pista": "barco",
+    "categoria": "personas"
+  },
+  {
+    "id": 482,
+    "palabra": "aurora",
+    "pista": "cielo",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 483,
+    "palabra": "selva",
+    "pista": "humedad",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 484,
+    "palabra": "comisaria",
+    "pista": "policia",
+    "categoria": "lugares"
+  },
+  {
+    "id": 485,
+    "palabra": "balneario",
+    "pista": "orilla",
+    "categoria": "lugares"
+  },
+  {
+    "id": 486,
+    "palabra": "laboratorio",
+    "pista": "prueba",
+    "categoria": "lugares"
+  },
+  {
+    "id": 487,
+    "palabra": "linux",
+    "pista": "terminal",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 488,
+    "palabra": "hipopotamo",
+    "pista": "rio",
+    "categoria": "animales"
+  },
+  {
+    "id": 489,
+    "palabra": "cliente",
+    "pista": "compra",
+    "categoria": "personas"
+  },
+  {
+    "id": 490,
+    "palabra": "tirar",
+    "pista": "cuerda",
+    "categoria": "acciones"
+  },
+  {
+    "id": 491,
+    "palabra": "agradecer",
+    "pista": "gracias",
+    "categoria": "acciones"
+  },
+  {
+    "id": 492,
+    "palabra": "mirar",
+    "pista": "vista",
+    "categoria": "acciones"
+  },
+  {
+    "id": 493,
+    "palabra": "mariposa",
+    "pista": "alas",
+    "categoria": "animales"
+  },
+  {
+    "id": 494,
+    "palabra": "aceite",
+    "pista": "grasa",
+    "categoria": "comida"
+  },
+  {
+    "id": 495,
+    "palabra": "mirador",
+    "pista": "vista",
+    "categoria": "lugares"
+  },
+  {
+    "id": 496,
+    "palabra": "humedal",
+    "pista": "agua",
+    "categoria": "naturaleza"
+  },
+  {
+    "id": 497,
+    "palabra": "puma",
+    "pista": "felino",
+    "categoria": "animales"
+  },
+  {
+    "id": 498,
+    "palabra": "teclado",
+    "pista": "teclas",
+    "categoria": "tecnologia"
+  },
+  {
+    "id": 499,
+    "palabra": "estudiante",
+    "pista": "clase",
+    "categoria": "personas"
+  },
+  {
+    "id": 500,
+    "palabra": "conejo",
+    "pista": "zanahoria",
+    "categoria": "animales"
+  }
+]
