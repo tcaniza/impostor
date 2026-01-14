@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#590404" />
   <title>El impostor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" integrity="sha512-b7G6y70Y6tGQHCoq+6QttIq8D89xDSHLVbkP4Jr2dI+tvwlHGawEq+y3OCAXoTr4Wr9L5xRngk6VwBEmc6kTmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="logo_blanco.svg" id="favicon" />
 </head>
@@ -25,7 +26,7 @@
     </div>
 
 
-    <div class="steps" id="steps" aria-label="Progreso de la partida">
+    <div class="steps animate__animated animate__fadeInDown" id="steps" aria-label="Progreso de la partida">
       <div class="step active" data-step="setup"><span class="dot"></span><span class="txt">Config</span></div>
       <div class="step" data-step="pass"><span class="dot"></span><span class="txt">Pasar</span></div>
       <div class="step" data-step="reveal"><span class="dot"></span><span class="txt">Ver</span></div>
@@ -34,140 +35,140 @@
     </div>
 
     <!-- SETUP -->
-    <section class="card screen active" id="screenSetup">
-      <h2 class="title">Configurar partida</h2>
-      <p class="desc">
+    <section class="card screen active" id="screenSetup" data-animate="animate__fadeInUp">
+      <h2 class="title" data-animate="animate__fadeInDown">Configurar partida</h2>
+      <p class="desc" data-animate="animate__fadeIn">
         Elegí impostores, cargá nombres y empezá. El impostor ve una pista, los demás ven la palabra.
       </p>
 
-      <label>¿Cuántos impostores?</label>
-      <div class="seg" role="group" aria-label="Cantidad de impostores">
+      <label data-animate="animate__fadeIn">¿Cuántos impostores?</label>
+      <div class="seg" role="group" aria-label="Cantidad de impostores" data-animate="animate__fadeInUp">
         <button type="button" class="segBtn" data-impostors="1" aria-pressed="true">1 impostor</button>
         <button type="button" class="segBtn" data-impostors="2" aria-pressed="false">2 impostores</button>
       </div>
 
-      <label>Nombres</label>
-      <div class="namesGrid" id="namesGrid" aria-label="Lista de jugadores">
+      <label data-animate="animate__fadeIn">Nombres</label>
+      <div class="namesGrid" id="namesGrid" aria-label="Lista de jugadores" data-animate="animate__fadeInUp">
         <input class="nameInput" type="text" inputmode="text" autocomplete="off" placeholder="Jugador 1" data-index="0" />
         <input class="nameInput" type="text" inputmode="text" autocomplete="off" placeholder="Jugador 2" data-index="1" />
         <input class="nameInput" type="text" inputmode="text" autocomplete="off" placeholder="Jugador 3" data-index="2" />
       </div>
       <p class="tiny hint" id="namesHint">Se agregan más campos automáticamente hasta 10 jugadores.</p>
 
-      <div class="chipset" id="namesChips" aria-label="Lista de jugadores"></div>
+      <div class="chipset" id="namesChips" aria-label="Lista de jugadores" data-animate="animate__fadeInUp"></div>
 
-      <label>Categorías de palabras</label>
-      <div class="metaRow">
+      <label data-animate="animate__fadeIn">Categorías de palabras</label>
+      <div class="metaRow" data-animate="animate__fadeInUp">
         <button class="btn secondary" id="btnCategories" type="button">Seleccionar categorías</button>
         <div class="pill mini" id="categoryPill">Categorías: <strong id="categoryCount">—</strong></div>
       </div>
-      <p class="tiny" id="categorySummary">Todas las categorías activas.</p>
+      <p class="tiny" id="categorySummary" data-animate="animate__fadeIn">Todas las categorías activas.</p>
 
       <div class="spacer"></div>
 
-      <div class="metaRow" aria-label="Estado">
+      <div class="metaRow" aria-label="Estado" data-animate="animate__fadeInUp">
         <div class="pill mini" id="savedPill">Nombres: <strong id="savedState">—</strong></div>
         <div class="pill mini">Mínimo: <strong id="minPlayers">—</strong></div>
       </div>
 
-      <div class="footerRow">
+      <div class="footerRow" data-animate="animate__fadeInUp">
         <button class="btn" id="btnStart" type="button" disabled>Iniciar juego</button>
         <!-- <button class="btn secondary" id="btnClearNames" type="button">Borrar nombres</button> -->
       </div>
 
-      <p class="tiny">
+      <p class="tiny" data-animate="animate__fadeIn">
         Tip: cuando tocás <b>Estoy listo</b>, aparece tu palabra o tu pista. Mirá rápido y pasá.
       </p>
     </section>
 
     <!-- PASS -->
-    <section class="card screen" id="screenPass">
+    <section class="card screen" id="screenPass" data-animate="animate__fadeInUp">
       <div style="display:flex; justify-content:space-between; gap:10px; align-items:center; position:relative; z-index:1;">
         <div class="pill">Jugador <strong id="passIdx">1</strong>/<strong id="passTotal">1</strong></div>
         <button class="btn secondary" id="btnAbort" type="button" style="width:auto; padding:10px 12px;">Volver</button>
       </div>
 
       <div class="center" style="position:relative; z-index:1;">
-        <img class="passMascot" src="logo_blanco.svg" alt="Logo de El impostor" id="passLogo" />
-        <div class="big">Pasá el celu a</div>
-        <div class="secret" id="passName">—</div>
-        <p class="desc">Cuando lo tengas, tocá el botón para ver tu rol.</p>
+        <img class="passMascot" src="logo_blanco.svg" alt="Logo de El impostor" id="passLogo" data-animate="animate__zoomIn" />
+        <div class="big" data-animate="animate__fadeInUp">Pasá el celu a</div>
+        <div class="secret" id="passName" data-animate="animate__bounceIn">—</div>
+        <p class="desc" data-animate="animate__fadeIn">Cuando lo tengas, tocá el botón para ver tu rol.</p>
         <div class="spacer"></div>
-        <button class="btn" id="btnImReady" type="button">Estoy listo</button>
-        <p class="tiny">Que nadie mire 😄</p>
+        <button class="btn" id="btnImReady" type="button" data-animate="animate__pulse">Estoy listo</button>
+        <p class="tiny" data-animate="animate__fadeIn">Que nadie mire 😄</p>
       </div>
     </section>
 
     <!-- REVEAL -->
-    <section class="card screen" id="screenReveal">
+    <section class="card screen" id="screenReveal" data-animate="animate__fadeInUp">
       <div style="display:flex; justify-content:space-between; gap:10px; align-items:center; position:relative; z-index:1;">
         <div class="pill">Turno de <strong id="revealName">—</strong></div>
       </div>
 
-      <div class="revealBox">
-        <div class="badge warn" id="roleBadge">Rol</div>
+      <div class="revealBox" data-animate="animate__fadeInUp">
+        <div class="badge warn" id="roleBadge" data-animate="animate__tada">Rol</div>
 
-        <div id="secretWrap" aria-live="polite">
-          <div class="secret" id="secretMain">—</div>
-          <p class="secretSub" id="secretSub">—</p>
+        <div id="secretWrap" aria-live="polite" data-animate="animate__zoomIn">
+          <div class="secret" id="secretMain" data-animate="animate__fadeInUp">—</div>
+          <p class="secretSub" id="secretSub" data-animate="animate__fadeIn">—</p>
         </div>
 
-        <p class="tiny" style="margin-top:10px;">
+        <p class="tiny" style="margin-top:10px;" data-animate="animate__fadeIn">
           Cuando termines, tocá <b>Ocultar y pasar</b>.
         </p>
 
-        <div class="footerRow">
-          <button class="btn secondary" id="btnHideNext" type="button">Ocultar y pasar</button>
+        <div class="footerRow" data-animate="animate__fadeInUp">
+          <button class="btn secondary" id="btnHideNext" type="button" data-animate="animate__pulse">Ocultar y pasar</button>
         </div>
       </div>
     </section>
 
     <!-- PLAY -->
-    <section class="card screen" id="screenPlay">
-      <h2 class="title">¡A jugar!</h2>
-      <p class="desc">
+    <section class="card screen" id="screenPlay" data-animate="animate__fadeInUp">
+      <h2 class="title" data-animate="animate__fadeInDown">¡A jugar!</h2>
+      <p class="desc" data-animate="animate__fadeIn">
         Ya todos vieron su rol. Ahora juegan y cuando quieran, finalizan la partida.
       </p>
 
-      <div class="revealBox">
-        <div class="badge good">Partida en curso</div>
-        <p class="desc" style="margin-top:4px;">
+      <div class="revealBox" data-animate="animate__fadeInUp">
+        <div class="badge good" data-animate="animate__heartBeat">Partida en curso</div>
+        <p class="desc" style="margin-top:4px;" data-animate="animate__fadeIn">
           Impostores: <b id="playImpostors">1</b> · Jugadores: <b id="playPlayers">—</b>
         </p>
 
-        <div class="footerRow">
-          <button class="btn danger" id="btnFinish" type="button">Finalizar partida</button>
-          <button class="btn secondary" id="btnNew" type="button">Repartir de nuevo</button>
+        <div class="footerRow" data-animate="animate__fadeInUp">
+          <button class="btn danger" id="btnFinish" type="button" data-animate="animate__pulse">Finalizar partida</button>
+          <button class="btn secondary" id="btnNew" type="button" data-animate="animate__pulse">Repartir de nuevo</button>
         </div>
       </div>
     </section>
 
     <!-- SUMMARY -->
-    <section class="card screen" id="screenSummary">
-      <h2 class="title">Resumen</h2>
-      <p class="desc">Palabra real y quién(es) fueron impostor(es).</p>
+    <section class="card screen" id="screenSummary" data-animate="animate__fadeInUp">
+      <h2 class="title" data-animate="animate__fadeInDown">Resumen</h2>
+      <p class="desc" data-animate="animate__fadeIn">Palabra real y quién(es) fueron impostor(es).</p>
 
-      <div class="revealBox">
-        <div class="secret" id="sumWord">—</div>
-        <p class="secretSub" id="sumClue">—</p>
-
-        <div class="spacer"></div>
-        <div class="badge bad">Impostor(es)</div>
-        <div id="sumImpostors" class="chipset"></div>
+      <div class="revealBox" data-animate="animate__fadeInUp">
+        <div class="secret" id="sumWord" data-animate="animate__zoomIn">—</div>
+        <p class="secretSub" id="sumClue" data-animate="animate__fadeIn">—</p>
 
         <div class="spacer"></div>
-        <div class="badge good">No impostores</div>
-        <div id="sumCrew" class="chipset"></div>
+        <div class="badge bad" data-animate="animate__tada">Impostor(es)</div>
+        <div id="sumImpostors" class="chipset" data-animate="animate__fadeInUp"></div>
 
-        <div class="footerRow">
-          <button class="btn" id="btnBackSetup" type="button">Volver al inicio</button>
+        <div class="spacer"></div>
+        <div class="badge good" data-animate="animate__tada">No impostores</div>
+        <div id="sumCrew" class="chipset" data-animate="animate__fadeInUp"></div>
+
+        <div class="footerRow" data-animate="animate__fadeInUp">
+          <button class="btn" id="btnBackSetup" type="button" data-animate="animate__pulse">Volver al inicio</button>
         </div>
       </div>
     </section>
   </div>
 
   <dialog id="categoryDialog" class="categoryDialog" aria-labelledby="categoryTitle">
-    <form method="dialog" class="dialogCard">
+    <form method="dialog" class="dialogCard" data-animate="animate__zoomIn">
       <div class="dialogHeader">
         <h3 id="categoryTitle">Categorías de la ronda</h3>
         <button type="button" class="iconBtn" id="btnCloseCategories" aria-label="Cerrar">×</button>
@@ -209,6 +210,33 @@
       });
     }
 
+    function animateElement(el, animation, delay = null){
+      if(!el || !animation) return;
+      el.classList.remove("animate__animated", animation);
+      void el.offsetWidth;
+      if(delay){
+        el.style.animationDelay = delay;
+      }else{
+        el.style.removeProperty("animation-delay");
+      }
+      el.classList.add("animate__animated", animation);
+      el.addEventListener("animationend", () => {
+        el.classList.remove(animation);
+        el.classList.remove("animate__animated");
+        el.style.removeProperty("animation-delay");
+      }, { once: true });
+    }
+
+    function animateScreenElements(screenEl){
+      if(!screenEl) return;
+      const items = Array.from(screenEl.querySelectorAll("[data-animate]"));
+      items.forEach((el, idx) => {
+        const animation = el.dataset.animate;
+        const delay = el.dataset.animateDelay || `${Math.min(idx * 0.06, 0.5)}s`;
+        animateElement(el, animation, delay);
+      });
+    }
+
     function focusForScreen(key){
       const map = {
         setup: () => $("#namesInput"),
@@ -232,12 +260,15 @@
         const prevEl = screens[prevKey];
         prevEl.classList.remove("active");
         prevEl.classList.add("leaving");
+        animateElement(prevEl, "animate__fadeOutUp");
         prevEl.addEventListener("animationend", () => {
           prevEl.classList.remove("leaving");
         }, { once: true });
       }
       screens[key].classList.remove("leaving");
       screens[key].classList.add("active");
+      animateElement(screens[key], "animate__fadeInUp");
+      animateScreenElements(screens[key]);
       currentScreen = key;
       updateSteps(key);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -696,9 +727,7 @@
       }
 
       if(secretWrap){
-        secretWrap.classList.remove("animate");
-        void secretWrap.offsetWidth;
-        secretWrap.classList.add("animate");
+        animateElement(secretWrap, "animate__zoomIn");
       }
       vibrate(14);
       showScreen("reveal");
