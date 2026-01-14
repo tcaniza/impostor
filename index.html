@@ -16,7 +16,7 @@
   <div class="app">
     <div class="topbar">
       <div class="brand">
-        <img class="mascot" src="logo_blanco.svg" alt="Logo de El impostor" id="brandLogo" />
+        <img class="mascot animate__animated animate__pulse animate__infinite animate__slow" src="logo_blanco.svg" alt="Logo de El impostor" id="brandLogo" />
         <div>
           <h1>El impostor</h1>
         </div>
@@ -28,7 +28,7 @@
     </div>
 
 
-    <div class="steps animate__animated animate__fadeInDown" id="steps" aria-label="Progreso de la partida">
+    <div class="steps animate__animated animate__slideInDown" id="steps" aria-label="Progreso de la partida">
       <div class="step active" data-step="setup"><span class="dot"></span><span class="txt">Config</span></div>
       <div class="step" data-step="pass"><span class="dot"></span><span class="txt">Pasar</span></div>
       <div class="step" data-step="reveal"><span class="dot"></span><span class="txt">Ver</span></div>
@@ -38,13 +38,13 @@
 
     <!-- SETUP -->
     <section class="card screen active" id="screenSetup" data-animate="animate__fadeInUp">
-      <h2 class="title" data-animate="animate__fadeInDown">Configurar partida</h2>
+      <h2 class="title" data-animate="animate__backInDown">Configurar partida</h2>
       <p class="desc" data-animate="animate__fadeIn">
         Elegí impostores, cargá nombres y empezá. El impostor ve una pista, los demás ven la palabra.
       </p>
 
       <label data-animate="animate__fadeIn">¿Cuántos impostores?</label>
-      <div class="seg" role="group" aria-label="Cantidad de impostores" data-animate="animate__fadeInUp">
+      <div class="seg" role="group" aria-label="Cantidad de impostores" data-animate="animate__zoomIn">
         <button type="button" class="segBtn" data-impostors="1" aria-pressed="true">1 impostor</button>
         <button type="button" class="segBtn" data-impostors="2" aria-pressed="false">2 impostores</button>
       </div>
@@ -91,7 +91,7 @@
       </div>
 
       <div class="center" style="position:relative; z-index:1;">
-        <img class="passMascot" src="logo_blanco.svg" alt="Logo de El impostor" id="passLogo" data-animate="animate__zoomIn" />
+        <img class="passMascot animate__animated animate__pulse animate__infinite animate__slower" src="logo_blanco.svg" alt="Logo de El impostor" id="passLogo" data-animate="animate__zoomIn" />
         <div class="big" data-animate="animate__fadeInUp">Pasá el celu a</div>
         <div class="secret" id="passName" data-animate="animate__bounceIn">—</div>
         <p class="desc" data-animate="animate__fadeIn">Cuando lo tengas, tocá el botón para ver tu rol.</p>
@@ -108,10 +108,10 @@
       </div>
 
       <div class="revealBox" data-animate="animate__fadeInUp">
-        <div class="badge warn" id="roleBadge" data-animate="animate__tada">Rol</div>
+        <div class="badge warn" id="roleBadge" data-animate="animate__rubberBand">Rol</div>
 
         <div id="secretWrap" aria-live="polite" data-animate="animate__zoomIn">
-          <div class="secret" id="secretMain" data-animate="animate__fadeInUp">—</div>
+          <div class="secret" id="secretMain" data-animate="animate__zoomIn">—</div>
           <p class="secretSub" id="secretSub" data-animate="animate__fadeIn">—</p>
         </div>
 
@@ -127,13 +127,13 @@
 
     <!-- PLAY -->
     <section class="card screen" id="screenPlay" data-animate="animate__fadeInUp">
-      <h2 class="title" data-animate="animate__fadeInDown">¡A jugar!</h2>
+      <h2 class="title" data-animate="animate__backInDown">¡A jugar!</h2>
       <p class="desc" data-animate="animate__fadeIn">
         Ya todos vieron su rol. Ahora juegan y cuando quieran, finalizan la partida.
       </p>
 
       <div class="revealBox" data-animate="animate__fadeInUp">
-        <div class="badge good" data-animate="animate__heartBeat">Partida en curso</div>
+        <div class="badge good" data-animate="animate__bounceIn">Partida en curso</div>
         <p class="desc" style="margin-top:4px;" data-animate="animate__fadeIn">
           Impostores: <b id="playImpostors">1</b> · Jugadores: <b id="playPlayers">—</b>
         </p>
@@ -147,7 +147,7 @@
 
     <!-- SUMMARY -->
     <section class="card screen" id="screenSummary" data-animate="animate__fadeInUp">
-      <h2 class="title" data-animate="animate__fadeInDown">Resumen</h2>
+      <h2 class="title" data-animate="animate__backInDown">Resumen</h2>
       <p class="desc" data-animate="animate__fadeIn">Palabra real y quién(es) fueron impostor(es).</p>
 
       <div class="revealBox" data-animate="animate__fadeInUp">
@@ -155,11 +155,11 @@
         <p class="secretSub" id="sumClue" data-animate="animate__fadeIn">—</p>
 
         <div class="spacer"></div>
-        <div class="badge bad" data-animate="animate__tada">Impostor(es)</div>
+        <div class="badge bad" data-animate="animate__jackInTheBox">Impostor(es)</div>
         <div id="sumImpostors" class="chipset" data-animate="animate__fadeInUp"></div>
 
         <div class="spacer"></div>
-        <div class="badge good" data-animate="animate__tada">No impostores</div>
+        <div class="badge good" data-animate="animate__jackInTheBox">No impostores</div>
         <div id="sumCrew" class="chipset" data-animate="animate__fadeInUp"></div>
 
         <div class="footerRow" data-animate="animate__fadeInUp">
@@ -206,10 +206,22 @@
     const activeIdx = order.indexOf(activeKey);
 
     stepsEl.querySelectorAll(".step").forEach((el) => {
+      const wasActive = el.classList.contains("active");
+      const wasDone = el.classList.contains("done");
       const k = el.dataset.step;
       const idx = order.indexOf(k);
       el.classList.toggle("active", k === activeKey);
       el.classList.toggle("done", idx > -1 && activeIdx > -1 && idx < activeIdx);
+
+      if(!wasActive && k === activeKey){
+        const dot = el.querySelector(".dot") || el;
+        playAnim(dot, "animate__heartBeat", { durationMs: 420 });
+      }
+
+      if(!wasDone && idx > -1 && activeIdx > -1 && idx < activeIdx){
+        const dot = el.querySelector(".dot") || el;
+        playAnim(dot, "animate__bounceIn", { durationMs: 420 });
+      }
     });
   }
 
@@ -713,7 +725,7 @@
   function renderCategoryDialog(){
     if(!categoryList) return;
     categoryList.innerHTML = "";
-    categories.forEach((cat) => {
+    categories.forEach((cat, idx) => {
       const row = document.createElement("label");
       row.className = "categoryItem";
       const checkbox = document.createElement("input");
@@ -729,6 +741,7 @@
       row.appendChild(checkbox);
       row.appendChild(span);
       categoryList.appendChild(row);
+      playAnim(row, "animate__fadeInUp", { delayMs: Math.min(idx * 30, 180), durationMs: 320 });
     });
   }
 
@@ -748,7 +761,13 @@
     }
   }
 
-  function closeCategoryDialog(){
+  async function closeCategoryDialog(){
+    const card = categoryDialog?.querySelector("[data-animate]");
+    if(card){
+      await playAnim(card, "animate__zoomOut", { durationMs: 220, keep: true });
+      stripAnimateClasses(card);
+      cleanupAnimateInline(card);
+    }
     if(categoryDialog?.close){
       categoryDialog.close();
     }else if(categoryDialog){
@@ -774,19 +793,20 @@
       x.type = "button";
       x.textContent = "×";
       x.title = "Quitar";
-      x.addEventListener("click", () => {
-        chip.classList.add("removing");
+      x.addEventListener("click", async () => {
+        if(chip.dataset.animating) return;
+        chip.dataset.animating = "1";
         vibrate(12);
-        window.setTimeout(() => {
-          const arr = parseNames(getNameValues());
-          arr.splice(idx, 1);
-          renderInputsFromSaved(arr.join("\n"));
-          ensureNameInputs();
-          refreshChips();
-        }, 180);
+        await playAnim(chip, "animate__fadeOutRight", { durationMs: 260, keep: true });
+        const arr = parseNames(getNameValues());
+        arr.splice(idx, 1);
+        renderInputsFromSaved(arr.join("\n"));
+        ensureNameInputs();
+        refreshChips();
       });
       chip.appendChild(x);
       namesChips.appendChild(chip);
+      playAnim(chip, "animate__fadeInUp", { delayMs: Math.min(idx * 40, 200), durationMs: 360 });
     });
 
     const minPlayers = Math.max(3, impostorsCount + 2);
@@ -816,6 +836,9 @@
   function updatePass(){
     passIdx.textContent = (currentPlayer + 1);
     passName.textContent = players[currentPlayer] ?? "—";
+    if(currentScreen === "pass"){
+      playAnim(passName, "animate__flipInX", { durationMs: 420 });
+    }
   }
 
   function isImpostor(i){ return impostorIdx.includes(i); }
@@ -872,8 +895,13 @@
       const chip = document.createElement("div");
       chip.className = "chip";
       chip.innerHTML = `<span>${p}</span>`;
-      if(impSet.has(i)) sumImpostors.appendChild(chip);
-      else sumCrew.appendChild(chip);
+      if(impSet.has(i)){
+        sumImpostors.appendChild(chip);
+        playAnim(chip, "animate__bounceInDown", { delayMs: Math.min(i * 40, 200), durationMs: 360 });
+      }else{
+        sumCrew.appendChild(chip);
+        playAnim(chip, "animate__fadeInUp", { delayMs: Math.min(i * 40, 200), durationMs: 360 });
+      }
     });
   }
 

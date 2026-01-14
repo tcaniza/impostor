@@ -120,10 +120,6 @@ body {
 }
 
 /* float SOLO cuando no está animate.css animando */
-.mascot:not(.animate__animated) {
-  animation: float 4.5s ease-in-out infinite;
-}
-
 
 /* --- STEPS (Barra de progreso) --- */
 .steps {
@@ -338,7 +334,6 @@ textarea:focus {
   align-items: center;
   gap: 8px;
   color: var(--text-main);
-  animation: chipIn 0.2s ease;
 }
 
 .chip button {
@@ -351,10 +346,6 @@ textarea:focus {
 
 .chip button:hover {
   color: var(--danger);
-}
-
-.chip.removing {
-  animation: chipOut 0.2s ease forwards;
 }
 
 /* --- BUTTONS --- */
@@ -440,10 +431,6 @@ textarea:focus {
 }
 
 /* pop SOLO si no lo está animando animate.css */
-.badge:not(.animate__animated) {
-  animation: badgePop 0.3s ease;
-}
-
 
 .badge.warn {
   background: rgba(239, 68, 68, 0.2);
@@ -478,10 +465,6 @@ textarea:focus {
 }
 
 /* float SOLO cuando no está animate.css animando */
-.passMascot:not(.animate__animated) {
-  animation: float 6s ease-in-out infinite;
-}
-
 
 .big {
   font-size: 1.2rem;
@@ -567,10 +550,6 @@ textarea:focus {
 }
 
 /* animación propia SOLO si no lo está animando animate.css */
-.dialogCard:not(.animate__animated) {
-  animation: dialogIn 0.35s ease;
-}
-
 
 .dialogHeader {
   display: flex;
@@ -645,58 +624,6 @@ textarea:focus {
   accent-color: var(--primary);
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-@keyframes badgePop {
-  0% {
-    transform: scale(0.95);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes chipIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes chipOut {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(12px);
-  }
-}
-
-@keyframes dialogIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
 /* ===== animate.css tuning ===== */
 :root {
   --animate-duration: 520ms;
