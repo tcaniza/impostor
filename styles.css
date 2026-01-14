@@ -98,11 +98,16 @@ body {
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
 }
 
 .theme-toggle:hover {
   border-color: var(--text-muted);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .mascot {
@@ -112,6 +117,7 @@ body {
   object-fit: cover;
   border: 2px solid var(--border-color);
   background: var(--bg-card);
+  animation: float 4.5s ease-in-out infinite;
 }
 
 /* --- STEPS (Barra de progreso) --- */
@@ -120,6 +126,7 @@ body {
   justify-content: space-between;
   position: relative;
   margin-bottom: 10px;
+  animation: fadeSlideDown 0.6s ease;
 }
 
 .steps::before {
@@ -183,19 +190,47 @@ body {
   box-shadow: var(--shadow-card);
   border: 1px solid var(--border-color);
   display: none;
-  animation: fadeUp 0.4s ease-out;
+  animation: screenIn 0.45s ease-out;
 }
 
-.card.active {
+.card.active,
+.card.leaving {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-@keyframes fadeUp {
+@keyframes screenIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card.leaving {
+  animation: screenOut 0.35s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes screenOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+}
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
@@ -280,6 +315,14 @@ textarea:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.segBtn:hover {
+  transform: translateY(-1px);
+}
+
+.segBtn:active {
+  transform: translateY(0) scale(0.98);
+}
+
 /* --- CHIPS (Nombres) --- */
 .chipset {
   display: flex;
@@ -297,6 +340,7 @@ textarea:focus {
   align-items: center;
   gap: 8px;
   color: var(--text-main);
+  animation: chipIn 0.2s ease;
 }
 
 .chip button {
@@ -311,6 +355,10 @@ textarea:focus {
   color: var(--danger);
 }
 
+.chip.removing {
+  animation: chipOut 0.2s ease forwards;
+}
+
 /* --- BUTTONS --- */
 .btn {
   width: 100%;
@@ -322,15 +370,18 @@ textarea:focus {
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.1s, background 0.2s;
+  transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 18px rgba(14, 165, 233, 0.25);
 }
 
 .btn:active {
-  transform: scale(0.98);
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2);
 }
 
 .btn:hover {
   background: var(--primary-hover);
+  transform: translateY(-1px);
 }
 
 .btn:disabled {
@@ -343,6 +394,7 @@ textarea:focus {
   background: var(--bg-input);
   color: var(--text-main);
   border: 1px solid var(--border-color);
+  box-shadow: none;
 }
 
 .btn.secondary:hover {
@@ -351,6 +403,7 @@ textarea:focus {
 
 .btn.danger {
   background: var(--danger);
+  box-shadow: 0 8px 18px rgba(244, 63, 94, 0.25);
 }
 
 /* --- PILLS & BADGES --- */
@@ -361,6 +414,7 @@ textarea:focus {
   background: var(--bg-input);
   color: var(--text-muted);
   border: 1px solid var(--border-color);
+  transition: transform 0.2s, opacity 0.2s;
 }
 
 .pill.mini {
@@ -385,6 +439,7 @@ textarea:focus {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  animation: badgePop 0.3s ease;
 }
 
 .badge.warn {
@@ -417,6 +472,7 @@ textarea:focus {
   object-fit: cover;
   margin: 20px 0;
   border: 4px solid var(--bg-input);
+  animation: float 6s ease-in-out infinite;
 }
 
 .big {
@@ -425,17 +481,23 @@ textarea:focus {
 }
 
 .secret {
-  font-size: 2.5rem;
+  font-size: clamp(1.7rem, 6vw, 2.6rem);
   font-weight: 900;
   color: var(--text-main);
   margin: 10px 0;
   text-align: center;
+  line-height: 1.1;
+  max-width: 100%;
+  word-break: break-word;
+  text-wrap: balance;
 }
 
 .secretSub {
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 4vw, 1.1rem);
   color: var(--text-muted);
   text-align: center;
+  line-height: 1.4;
+  max-width: 100%;
 }
 
 .revealBox {
@@ -448,6 +510,7 @@ textarea:focus {
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  animation: fadeUpSoft 0.4s ease;
 }
 
 .metaRow,
@@ -494,6 +557,7 @@ textarea:focus {
   flex-direction: column;
   gap: 16px;
   box-shadow: var(--shadow-card);
+  animation: dialogIn 0.35s ease;
 }
 
 .dialogHeader {
@@ -567,4 +631,83 @@ textarea:focus {
   width: 18px;
   height: 18px;
   accent-color: var(--primary);
+}
+
+#secretWrap.animate {
+  animation: revealPop 0.35s ease;
+}
+
+@keyframes revealPop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeUpSoft {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes badgePop {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes chipIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chipOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+}
+
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
