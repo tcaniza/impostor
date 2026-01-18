@@ -108,7 +108,6 @@ body {
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 
 .theme-toggle:hover {
@@ -155,7 +154,6 @@ body {
   align-items: center;
   gap: 6px;
   opacity: 0.5;
-  transition: opacity 0.25s ease;
 }
 
 .step.active,
@@ -169,7 +167,6 @@ body {
   background: var(--bg-card);
   border: 2px solid var(--border-color);
   border-radius: 50%;
-  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
 }
 
 .step.active .dot {
@@ -259,7 +256,6 @@ textarea {
   resize: vertical;
   min-height: 100px;
   outline: none;
-  transition: border-color 0.2s;
 }
 
 textarea:focus {
@@ -282,7 +278,6 @@ textarea:focus {
   padding: 12px 14px;
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .nameInput:focus {
@@ -308,7 +303,6 @@ textarea:focus {
   font-weight: 650;
   border-radius: calc(var(--border-radius) - 4px);
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 .segBtn[aria-pressed="true"] {
@@ -342,7 +336,6 @@ textarea:focus {
   font-size: 1.2rem;
   cursor: pointer;
   color: var(--text-muted);
-  transition: color 0.15s;
 }
 
 .chip button:hover {
@@ -360,7 +353,6 @@ textarea:focus {
   font-size: 1rem;
   font-weight: 750;
   cursor: pointer;
-  transition: background 0.2s, filter 0.15s;
   box-shadow: 0 8px 18px rgba(14, 165, 233, 0.25);
 }
 
@@ -395,7 +387,6 @@ textarea:focus {
   background: var(--bg-input);
   color: var(--text-muted);
   border: 1px solid var(--border-color);
-  transition: opacity 0.2s;
 }
 
 .pill.mini {
@@ -563,7 +554,6 @@ textarea:focus {
   color: var(--text-main);
   font-size: 1.2rem;
   cursor: pointer;
-  transition: border-color 0.2s, filter 0.15s;
 }
 
 .iconBtn:hover { border-color: var(--text-muted); }
@@ -591,7 +581,6 @@ textarea:focus {
   background: var(--bg-card);
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  transition: border-color 0.2s, filter 0.15s;
 }
 
 .categoryItem:hover {
