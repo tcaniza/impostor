@@ -28,7 +28,7 @@
     </div>
 
     <!-- Steps: entrada sutil -->
-    <div class="steps animate__animated animate__fadeInDown" id="steps" aria-label="Progreso de la partida">
+    <div class="steps animate__animated animate__fadeIn" id="steps" aria-label="Progreso de la partida">
       <div class="step active" data-step="setup"><span class="dot"></span><span class="txt">Config</span></div>
       <div class="step" data-step="pass"><span class="dot"></span><span class="txt">Pasar</span></div>
       <div class="step" data-step="reveal"><span class="dot"></span><span class="txt">Ver</span></div>
@@ -37,7 +37,7 @@
     </div>
 
     <!-- SETUP -->
-    <section class="card screen active" id="screenSetup" data-animate="animate__fadeInUp">
+    <section class="card screen active" id="screenSetup" data-animate="animate__fadeIn">
       <h2 class="title">Configurar partida</h2>
       <p class="desc">
         Elegí impostores, cargá nombres y empezá. El impostor ve una pista, los demás ven la palabra.
@@ -83,7 +83,7 @@
     </section>
 
     <!-- PASS -->
-    <section class="card screen" id="screenPass" data-animate="animate__fadeInUp">
+    <section class="card screen" id="screenPass" data-animate="animate__fadeIn">
       <div style="display:flex; justify-content:space-between; gap:10px; align-items:center; position:relative; z-index:1;">
         <div class="pill">Jugador <strong id="passIdx">1</strong>/<strong id="passTotal">1</strong></div>
         <button class="btn secondary" id="btnAbort" type="button" style="width:auto; padding:10px 12px;">Volver</button>
@@ -104,7 +104,7 @@
     </section>
 
     <!-- REVEAL -->
-    <section class="card screen" id="screenReveal" data-animate="animate__fadeInUp">
+    <section class="card screen" id="screenReveal" data-animate="animate__fadeIn">
       <div style="display:flex; justify-content:space-between; gap:10px; align-items:center; position:relative; z-index:1;">
         <div class="pill">Turno de <strong id="revealName">—</strong></div>
       </div>
@@ -128,7 +128,7 @@
     </section>
 
     <!-- PLAY -->
-    <section class="card screen" id="screenPlay" data-animate="animate__fadeInUp">
+    <section class="card screen" id="screenPlay" data-animate="animate__fadeIn">
       <h2 class="title">¡A jugar!</h2>
       <p class="desc">
         Ya todos vieron su rol. Ahora juegan y cuando quieran, finalizan la partida.
@@ -148,7 +148,7 @@
     </section>
 
     <!-- SUMMARY -->
-    <section class="card screen" id="screenSummary" data-animate="animate__fadeInUp">
+    <section class="card screen" id="screenSummary" data-animate="animate__fadeIn">
       <h2 class="title">Resumen</h2>
       <p class="desc">Palabra real y quién(es) fueron impostor(es).</p>
 
@@ -294,9 +294,9 @@
       || screenEl.querySelector("#btnFinish")
       || screenEl.querySelector("#btnBackSetup");
 
-    if(title) playAnim(title, "animate__fadeInUp", { durationMs: 260 });
-    if(desc)  playAnim(desc,  "animate__fadeIn",   { durationMs: 240, delayMs: 40 });
-    if(primaryBtn) playAnim(primaryBtn, "animate__fadeInUp", { durationMs: 260, delayMs: 80 });
+    if(title) playAnim(title, "animate__fadeIn", { durationMs: 180 });
+    if(desc)  playAnim(desc,  "animate__fadeIn", { durationMs: 160, delayMs: 20 });
+    if(primaryBtn) playAnim(primaryBtn, "animate__fadeIn", { durationMs: 180, delayMs: 40 });
   }
 
   function focusForScreen(key){
@@ -331,7 +331,7 @@
       if(prevEl && prevEl !== nextEl){
         prevEl.classList.add("leaving");
         prevEl.classList.add("active");
-        await playAnim(prevEl, "animate__fadeOut", { durationMs: 180, keep: true });
+        await playAnim(prevEl, "animate__fadeOut", { durationMs: 160, keep: true });
 
         prevEl.classList.remove("active");
         prevEl.classList.remove("leaving");
@@ -345,7 +345,7 @@
 
       // Entrada rápida
       nextEl.classList.add("active");
-      await playAnim(nextEl, "animate__fadeInUp", { durationMs: 220 });
+      await playAnim(nextEl, "animate__fadeIn", { durationMs: 180 });
 
       // Interno mínimo (titulo/desc/botón)
       requestAnimationFrame(() => animateScreenMinimal(nextEl));
@@ -713,7 +713,7 @@
       categoryList.appendChild(row);
 
       // entrada sutil por fila (muy poca)
-      playAnim(row, "animate__fadeInUp", { delayMs: Math.min(idx * 16, 140), durationMs: 220 });
+      playAnim(row, "animate__fadeIn", { delayMs: Math.min(idx * 12, 100), durationMs: 180 });
     });
   }
 
@@ -779,7 +779,7 @@
       chip.appendChild(x);
       namesChips.appendChild(chip);
 
-      playAnim(chip, "animate__fadeInUp", { delayMs: Math.min(idx * 12, 120), durationMs: 220 });
+      playAnim(chip, "animate__fadeIn", { delayMs: Math.min(idx * 10, 80), durationMs: 180 });
     });
 
     const minPlayers = Math.max(3, impostorsCount + 2);
@@ -837,7 +837,7 @@
     }
 
     // entrada sutil del secreto
-    playAnim(secretWrap, "animate__fadeInUp", { durationMs: 200 });
+    playAnim(secretWrap, "animate__fadeIn", { durationMs: 180 });
     vibrate(14);
     showScreen("reveal");
   }
@@ -872,7 +872,7 @@
       if(impSet.has(i)) sumImpostors.appendChild(chip);
       else sumCrew.appendChild(chip);
 
-      playAnim(chip, "animate__fadeInUp", { delayMs: Math.min(i * 12, 120), durationMs: 220 });
+      playAnim(chip, "animate__fadeIn", { delayMs: Math.min(i * 10, 80), durationMs: 180 });
     });
   }
 

@@ -596,7 +596,7 @@ textarea:focus {
 
 /* ===== animate.css tuning ===== */
 :root {
-  --animate-duration: 220ms;
+  --animate-duration: 160ms;
   --animate-delay: 0ms;
 }
 
